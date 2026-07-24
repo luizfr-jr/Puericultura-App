@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo da Puericultura - Portal Profissional</title>
+    
+    <link rel="icon" type="image/png" href="icone.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- TELA DE LOGIN -->
+    <div id="app-login" class="login-wrapper">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="icone.png" alt="Logo Puericultura" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZjQzZjVlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDJhOCA4IDAgMCAwLTggOHYzYTIgMiAwIDAgMCAyIDJoMTRhMiAyIDAgMCAwIDItMnYtM2E4IDggMCAwIDAtOC04eiIvPjwvc3ZnPg=='">
+                <h1>Painel Clínico</h1>
+                <p>Sistema Avançado de Puericultura</p>
+            </div>
+
+            <!-- BOTÃO GOOGLE -->
+            <button type="button" id="btnGoogleLogin" class="btn-google">
+                <svg viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
+                Conectar com Google Workspace
+            </button>
+
+            <div class="login-divider">ou credenciais COREN</div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label>COREN / E-mail</label>
+                    <input type="text" class="form-control" id="usuario" placeholder="Ex: COREN-RS 000.000" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha de Acesso</label>
+                    <input type="password" class="form-control" id="senha" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Acessar Sistema</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- DASHBOARD PRINCIPAL -->
+    <div id="app-dashboard" class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="logo-area">
+                <img src="icone.png" alt="Logo" class="logo-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZjQzZjVlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDJhOCA4IDAgMCAwLTggOHYzYTIgMiAwIDAgMCAyIDJoMTRhMiAyIDAgMCAwIDItMnYtM2E4IDggMCAwIDAtOC04eiIvPjwvc3ZnPg=='">
+                <h2>Mundo da Puericultura</h2>
+            </div>
+            
+            <div class="menu-category">Módulos Clínicos</div>
+            <ul class="nav-menu">
+                <li><a id="menuDashboard" class="nav-link active" data-target="view-dashboard"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Visão Geral</a></li>
+                <li><a href="#" class="nav-link" data-target="view-nova-consulta"><svg viewBox="0 0 24 24"><path d="M4.8 2.3A.3.3 0 0 1 5 2h14a.3.3 0 0 1 .2.3l-2.4 7.2a6 6 0 0 1-11.4 0L4.8 2.3z"></path><path d="M12 15v7"></path><path d="M9 19h6"></path><path d="M9 12h6"></path></svg> Nova Consulta</a></li>
+                <li><a href="#" class="nav-link" data-target="view-crescimento"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Crescimento & OMS</a></li>
+                <li><a href="#" class="nav-link" data-target="view-neonatais"><svg viewBox="0 0 24 24"><path d="M9 12h.01"/><path d="M15 12h.01"/><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/><path d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10z"/></svg> Cuidados Neonatais</a></li>
+                <li><a href="#" class="nav-link" data-target="view-amamentacao"><svg viewBox="0 0 24 24"><path d="M9 2h6v2H9z"/><path d="M10 4v3h4V4"/><path d="M8 7h8v2a4 4 0 0 1-4 4 4 4 0 0 1-4-4V7z"/><path d="M10 13v7a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-7"/></svg> Amamentação</a></li>
+                <li><a href="#" class="nav-link" data-target="view-caderneta"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Caderneta Digital</a></li>
+            </ul>
+
+            <div class="menu-category" style="margin-top: 14px;">Suporte</div>
+            <ul class="nav-menu">
+                <li><a id="btnSidebarPostos" style="cursor: pointer;"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Postos de Saúde</a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-avatar">EN</div>
+                <div class="user-info">
+                    <h4>Enfermeiro(a)</h4>
+                    <p>Ativo no Sistema</p>
+                </div>
+                <button class="btn-logout" id="btnSair" title="Encerrar Sessão">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <!-- TELA 0: DASHBOARD -->
+            <div id="view-dashboard" class="page-view" style="display: flex;">
+                <div class="top-stats-bar">
+                    <div class="header-title-box">
+                        <h1>⚡ Portal de Puericultura</h1>
+                        <p>Plataforma inteligente de monitoramento e assistência à saúde infantil</p>
+                    </div>
+                    <button class="btn btn-primary open-view" data-target="view-nova-consulta">+ Nova Consulta</button>
+                </div>
+
+                <div class="stats-cards-grid">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h4>Crianças Registradas</h4>
+                            <h2>2</h2>
+                            <p>+2 esta semana</p>
+                        </div>
+                        <div class="stat-icon">👥</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h4>Consultas do Dia</h4>
+                            <h2>0</h2>
+                            <p>Agenda regular</p>
+                        </div>
+                        <div class="stat-icon">📅</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h4>Prontuários Ativos</h4>
+                            <h2>1</h2>
+                            <p>Sincronizado</p>
+                        </div>
+                        <div class="stat-icon">📊</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h4>Alertas Clínicos</h4>
+                            <h2>0</h2>
+                            <p>Parâmetros normais</p>
+                        </div>
+                        <div class="stat-icon">🛡️</div>
+                    </div>
+                </div>
+
+                <section class="modules-section">
+                    <div class="modules-section-header">
+                        <h2>🚀 Módulos Especializados</h2>
+                        <p>Acesse rapidamente as ferramentas de apoio clínico e protocolos da infância</p>
+                    </div>
+
+                    <div class="puericultura-grid">
+                        <div class="puericultura-item open-view" data-target="view-neonatais"><div class="puericultura-item-img"><img src="icone.png" alt="Cuidados Neonatais"></div><div class="puericultura-item-info"><h3>Cuidados Neonatais</h3><p>Atenção especializada aos recém-nascidos</p></div></div>
+                        <div class="puericultura-item open-view" data-target="view-crescimento"><div class="puericultura-item-img"><img src="icone.png" alt="Avaliação do Crescimento"></div><div class="puericultura-item-info"><h3>Avaliação do Crescimento</h3><p>Monitoramento antropométrico e percentis</p></div></div>
+                        <div class="puericultura-item open-view" data-target="view-imunizacao"><div class="puericultura-item-img"><img src="icone.png" alt="Imunização"></div><div class="puericultura-item-info"><h3>Imunización</h3><p>Proteção através da vacinação</p></div></div>
+                        <div class="puericultura-item open-view" data-target="view-consultas"><div class="puericultura-item-img"><img src="icone.png" alt="Consultas de Rotina"></div><div class="puericultura-item-info"><h3>Consultas de Rotina</h3><p>Acompanhamento preventivo regular</p></div></div>
+                        <div class="puericultura-item open-view" data-target="view-amamentacao"><div class="puericultura-item-img"><img src="icone.png" alt="Apoio à Amamentação"></div><div class="puericultura-item-info"><h3>Apoio à Amamentação</h3><p>Orientações para aleitamento materno</p></div></div>
+                        <div class="puericultura-item open-view" data-target="view-educacao"><div class="puericultura-item-img"><img src="icone.png" alt="Educação Familiar"></div><div class="puericultura-item-info"><h3>Educação Familiar</h3><p>Orientação aos pais e cuidadores</p></div></div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- TELA: NOVA CONSULTA -->
+            <div id="view-nova-consulta" class="page-view inner-view">
+                <button class="btn-voltar open-view" data-target="view-dashboard">← Voltar ao Início</button>
+                <div class="module-header-text">
+                    <h1>Nova Consulta de Puericultura</h1>
+                    <p>Preencha os campos obrigatórios para registrar o atendimento no prontuário.</p>
+                </div>
+                
+                <div class="consulta-layout" style="margin-top: 10px;">
+                    <form id="formNovaConsulta" class="form-section">
+                        <h3>Informações do Atendimento</h3>
+                        <div class="form-grid">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Criança Atendida</label>
+                                <select id="selectCrianca" class="form-control" required>
+                                    <option value="" disabled selected>Selecione o paciente...</option>
+                                    <option value="1">João Silva</option>
+                                    <option value="2">Maria Oliveira</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;"><label>Data do Atendimento</label><input type="date" id="dataConsulta" class="form-control" value="2026-07-24" required></div>
+                            <div class="form-group" style="margin-bottom: 0;"><label>Tipo de Protocolo</label><select class="form-control" required><option value="puericultura" selected>Consulta de Puericultura</option></select></div>
+                            <div class="form-group" style="margin-bottom: 0;"><label>Retorno Agendado</label><input type="date" class="form-control"></div>
+                        </div>
+                        
+                        <div class="form-group"><label>Queixa Principal / Motivo da Consulta</label><textarea id="queixaPrincipal" class="form-control" placeholder="Relato detalhado fornecido pelo responsável..." required></textarea></div>
+                        <div class="form-group"><label>Exame Físico e Antropometria</label><textarea class="form-control" placeholder="Descreva os achados do exame clínico, peso, estatura e perímetro cefálico..." required></textarea></div>
+                        <div class="form-group"><label>Diagnóstico de Enfermagem</label><textarea class="form-control" placeholder="Diagnósticos identificados com base na taxonomia..." ></textarea></div>
+                        <div class="form-group"><label>Intervenções Realizadas</label><textarea class="form-control" placeholder="Ações e procedimentos executados na consulta..."></textarea></div>
+                        <div class="form-group"><label>Orientações à Família</label><textarea class="form-control" placeholder="Recomendações sobre puericultura, marcos e sinais de alerta..."></textarea></div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-cancel open-view" data-target="view-dashboard">Cancelar</button>
+                            <button type="submit" class="btn btn-save">Salvar e Registrar Consulta</button>
+                        </div>
+                    </form>
+                    
+                    <div class="guide-section">
+                        <h3>Guia de Apoio Clínico</h3>
+                        <p>Utilize os protocolos atualizados da OMS e MS para a faixa etária correspondente.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA: CADERNETA DIGITAL -->
+            <div id="view-caderneta" class="page-view inner-view">
+                <button class="btn-voltar open-view" data-target="view-dashboard">← Voltar ao Início</button>
+                <div class="module-header-text" style="text-align: left; margin-bottom: 20px;">
+                    <h1 style="justify-content: flex-start;">Caderneta Digital da Criança</h1>
+                    <p style="margin: 0;">Histórico unificado de prontuários, consultas e marcos de desenvolvimento.</p>
+                </div>
+
+                <div class="caderneta-tabs">
+                    <button class="tab-btn active">Registros Salvos</button>
+                    <button class="tab-btn inactive">Diretrizes</button>
+                </div>
+
+                <div class="list-card" id="listaCriancasCadastradas">
+                    <!-- Conteúdo injetado via JavaScript -->
+                </div>
+            </div>
+
+            <!-- TELA: AVALIAÇÃO DO CRESCIMENTO -->
+            <div id="view-crescimento" class="page-view inner-view">
+                <button class="btn-voltar open-view" data-target="view-dashboard">← Voltar ao Início</button>
+                <div class="module-wrapper">
+                    <div class="module-header-text">
+                        <h1>Avaliação do Crescimento</h1>
+                        <p>Monitoramento sistemático do desenvolvimento físico e neuropsicomotor infantil</p>
+                    </div>
+
+                    <div class="module-banner banner-pink">
+                        <div><strong>Diretriz Técnica</strong> O acompanhamento regular do crescimento permite identificar precocemente desvios do padrão normal, possibilitando intervenções oportunas.</div>
+                    </div>
+
+                    <div class="module-grid">
+                        <div class="module-card">
+                            <div class="module-card-header"><h4>Antropometria</h4></div>
+                            <ul class="module-list"><li>Peso corporal</li><li>Estatura/comprimento</li><li>Perímetro cefálico</li><li>IMC para idade</li></ul>
+                        </div>
+                        <div class="module-card">
+                            <div class="module-card-header"><h4>Desenvolvimento</h4></div>
+                            <ul class="module-list"><li>Motor grosso</li><li>Motor fino</li><li>Linguagem</li><li>Social-cognitivo</li></ul>
+                        </div>
+                        <div class="module-card">
+                            <div class="module-card-header"><h4>Percentis</h4></div>
+                            <ul class="module-list"><li>Curvas da OMS</li><li>Interpretação de percentis</li><li>Velocidade de crescimento</li><li>Adequação nutricional</li></ul>
+                        </div>
+                    </div>
+
+                    <div class="module-panel">
+                        <h3>Marcos do Desenvolvimento por Idade</h3>
+                        <div class="dev-stage-list">
+                            <div class="dev-stage-item"><h4>0-3 meses</h4><p>Sustenta a cabeça, sorri socialmente, acompanha objetos com o olhar</p></div>
+                            <div class="dev-stage-item"><h4>4-6 meses</h4><p>Senta com apoio, pega objetos, balbucia</p></div>
+                            <div class="dev-stage-item"><h4>7-12 meses</h4><p>Senta sem apoio, engatinha, fala "mamã/papá"</p></div>
+                            <div class="dev-stage-item"><h4>12-24 meses</h4><p>Anda sozinho, vocabulário de 10+ palavras, brinca simbolicamente</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA: CUIDADOS NEONATAIS -->
+            <div id="view-neonatais" class="page-view inner-view">
+                <button class="btn-voltar open-view" data-target="view-dashboard">← Voltar ao Início</button>
+                <div class="module-wrapper">
+                    <div class="module-header-text">
+                        <h1>Cuidados Neonatais</h1>
+                        <p>Atenção especializada aos recém-nascidos nos primeiros 28 dias de vida</p>
+                    </div>
+                    <div class="module-banner banner-pink">
+                        <div><strong>Período Crítico</strong> Os primeiros 28 dias de vida são fundamentais para a adaptação do recém-nascido ao ambiente extrauterino.</div>
+                    </div>
+                    <div class="module-grid">
+                        <div class="module-card"><div class="module-card-header"><h4>Controle Térmico</h4></div><p>Manutenção da temperatura corporal adequada através de técnicas como contato pele a pele.</p></div>
+                        <div class="module-card"><div class="module-card-header"><h4>Monitoramento Cardiorrespiratório</h4></div><p>Acompanhamento dos sinais vitais, frequência cardíaca, respiração e saturação.</p></div>
+                        <div class="module-card"><div class="module-card-header"><h4>Controle de Peso</h4></div><p>Monitoramento diário e sinais de desidratação para garantir crescimento adequado.</p></div>
+                        <div class="module-card"><div class="module-card-header"><h4>Sinais de Alerta</h4></div><p>Identificação precoce de icterícia e dificuldades alimentares.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA: IMUNIZAÇÃO -->
+            <div id="view-imunizacao" class="page-view inner-view">
+                <button class="btn-voltar open-view" data-target="view-dashboard">← Voltar ao Início</button>
+                <div class="module-wrapper">
+                    <div class="module-header-text">
+                        <h1>Imunização</h1>
+                        <p>Proteção através da vacinação - Calendário Nacional de Imunização</p>
+                    </div>
+                    <div class="module-banner banner-pink">
+                        <div><strong>Importância da Vacinação</strong> As vacinas são uma das medidas preventivas mais eficazes e seguras da saúde pública.</div>
+                    </div>
+                    <div class="module-grid">
+                        <div class="module-card"><h4>Ao nascer</h4><ul class="module-list check"><li>BCG</li><li>Hepatite B</li></ul></div>
+                        <div class="module-card"><h4>2 meses</h4><ul class="module-list check"><li>Pentavalente (1ª)</li><li>VIP (1ª)</li><li>Pneumocócica (1ª)</li><li>Rotavírus (1ª)</li></ul></div>
+                        <div class="module-card"><h4>4 meses</h4><ul class="module-list check"><li>Pentavalente (2ª)</li><li>VIP (2ª)</li><li>Pneumocócica (2ª)</li><li>Rotavírus (2ª)</li></ul></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA: CONSULTAS DE ROTINA -->
+            <div id="view-consultas" class="page-view inner-view">
+                <button class="btn-voltar open-view" data-target="view-dashboard">← Voltar ao Início</button>
+                <div class="module-wrapper">
+                    <div class="module-header-text">
+                        <h1>Consultas de Rotina</h1>
+                        <p>Acompanhamento preventivo regular para monitoramento do desenvolvimento</p>
+                    </div>
+                    <div class="module-panel">
+                        <h3>Cronograma Oficial de Atendimentos</h3>
+                        <div class="timeline-grid">
+                            <button class="timeline-btn">1ª semana</button>
+                            <button class="timeline-btn">1 mês</button>
+                            <button class="timeline-btn">2 meses</button>
+                            <button class="timeline-btn">4 meses</button>
+                            <button class="timeline-btn">6 meses</button>
+                            <button class="timeline-btn">9 meses</button>
+                            <button class="timeline-btn">12 meses</button>
+                            <button class="timeline-btn">18 meses</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA: AMAMENTAÇÃO -->
+            <div id="view-amamentacao" class="page-view inner-view">
+                <button class="btn-voltar open-view" data-target="view-dashboard">← Voltar ao Início</button>
+                <div class="module-wrapper">
+                    <div class="module-header-text">
+                        <h1>Guia de Amamentação</h1>
+                        <p>A importância do aleitamento materno exclusivo para a mãe e o lactente.</p>
+                    </div>
+                    <div class="module-grid">
+                        <div class="module-card"><h4>Para o Bebê</h4><p>Proteção contra infecções gastrointestinais, respiratórias, alergias e estímulo cognitivo.</p></div>
+                        <div class="module-card"><h4>Para a Mãe</h4><p>Redução do sangramento pós-parto, menor risco de câncer e fortalecimento do vínculo.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA: EDUCAÇÃO FAMILIAR -->
+            <div id="view-educacao" class="page-view inner-view">
+                <button class="btn-voltar open-view" data-target="view-dashboard">← Voltar ao Início</button>
+                <div class="module-wrapper">
+                    <div class="module-header-text">
+                        <h1>Educação Familiar</h1>
+                        <p>Orientação aos pais e cuidadores para promover práticas saudáveis no domicílio</p>
+                    </div>
+                    <div class="module-grid">
+                        <div class="module-card"><h4>Cuidados Domiciliares</h4><ul class="module-list check"><li>Higiene corporal e banho</li><li>Cuidados com o coto umbilical</li><li>Prevenção de acidentes domésticos</li></ul></div>
+                        <div class="module-card"><h4>Estímulo Psicomotor</h4><ul class="module-list check"><li>Estimulação precoce</li><li>Importância do brincar</li><li>Limites e rotinas saudáveis</li></ul></div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MODAL POSTOS DE SAÚDE -->
+    <div class="modal-overlay" id="modalPostos">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Rede de Postos de Saúde (ESF / UBS)</h2>
+                <button class="close-btn" id="fecharModalPostos">&times;</button>
+            </div>
+            <div class="postos-header-info">
+                <span>📞</span> Telefone Central: 3911-3030 (informe o ramal do posto desejado)
+            </div>
+            <div class="postos-list">
+                <div class="posto-card"><h4>ESF 01 – RUI RAMOS/IPIRANGA <span>Ramal: 3435</span></h4><p>📍 Rua Arnaldo Ribeiro, 127. Bairro Rui Ramos.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 02 – MASCARENHAS DE MORAES <span>Ramal: 3441</span></h4><p>📍 Rua Borges de Medeiros, 3122.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 03 – CIDADE NOVA <span>Ramal: 3447</span></h4><p>📍 Rua Alcides Trein, sem número.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 04 – COHAB I <span>Ramal: 3453</span></h4><p>📍 Rua Argeu Veiga, sem número.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 05 – TARRAGÓ/BELA VISTA <span>Ramal: 3459</span></h4><p>📍 Rua Júlio de Castilhos, 1428. Bairro Tarragó.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 06 – SÃO JOÃO</h4><p>📍 Rua Venâncio Aires, 2618.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 07 – UNIÃO DAS VILAS <span>Ramal: 3471</span></h4><p>📍 Avenida Rio Uruguai, sem número. Bairro União das Vilas.</p><p>🕒 Segunda a sexta-feira 7h30 às 20h.</p></div>
+                <div class="posto-card"><h4>ESF 09 – BARRAGEM SANCHURI</h4><p>📍 Avenida Gabriel Pacheco, sem número.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 10 – SÃO MARCOS</h4><p>📍 Rua Francisco Ancinelo, 468, esquina com a Rua Rico Soares.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 16h.</p></div>
+                <div class="posto-card"><h4>UBS 11 – JOÃO ARREGUI</h4><p>📍 Rua João Rossi, sem número.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 16h.</p></div>
+                <div class="posto-card"><h4>UBS 12 – PLANO ALTO</h4><p>📍 Rua 02, 268.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 16h.</p></div>
+                <div class="posto-card"><h4>ESF 14 – TABAJARA BRITES <span>Ramal: 3489</span></h4><p>📍 Rua Umbelino Francisco Gomes, sem número.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 15 – HÍPICA <span>Ramal: 3495</span></h4><p>📍 Rua Braz Limongi, 330.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 16 – CIDADE ALEGRIA <span>Ramal: 3501</span></h4><p>📍 Rua Alceu Wamosy, sem número.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 17 – NOVA ESPERANÇA <span>Ramal: 3477</span></h4><p>📍 Rua José Garibaldi, 1701.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 18 – PROFILURB <span>Ramal: 3483</span></h4><p>📍 Rua 08, Loteamento Gustavo Ibarra, Quadra 02.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 19 – JOÃO PAULO II <span>Ramal: 3507</span></h4><p>📍 Quadra 14ª, entre as ruas G e F.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 20 – CAIC</h4><p>📍 Rua Vinte e Um de Abril, sem número, anexo à Escola Elvira Ceratti.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 21 – CENTRO <span>Ramal: 3348</span></h4><p>📍 Avenida Presidente Vargas, no prédio da Policlínca Adulto.</p><p>🕒 Segunda a sexta-feira 7h30 às 11h30 / 13h30 às 17h30.</p></div>
+                <div class="posto-card"><h4>ESF 22 – CABO LUIZ QUEVEDO <span>Ramal: 3519</span></h4><p>📍 Rua Senador Salgado Filho, sem número.</p><p>🕒 Segunda a sexta-feira 7h30 às 20h.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTAINER DOS AVISOS (TOASTS) -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
