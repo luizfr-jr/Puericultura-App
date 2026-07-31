@@ -37,7 +37,7 @@ body { background-color: var(--bg-body); color: var(--text-main); min-height: 10
 .login-divider::not(:empty)::after { margin-left: .75em; }
 
 /* ESTRUTURA DO DASHBOARD */
-.dashboard-wrapper { display: none; max-width: 1560px; margin: 0 auto; padding: 24px; gap: 24px; min-height: 100vh; animation: fadeIn 0.4s ease; }
+.dashboard-wrapper { display: flex; max-width: 1560px; margin: 0 auto; padding: 24px; gap: 24px; min-height: 100vh; animation: fadeIn 0.4s ease; }
 
 /* SIDEBAR */
 .sidebar { width: 280px; flex-shrink: 0; display: flex; flex-direction: column; height: calc(100vh - 48px); position: sticky; top: 24px; background-color: var(--bg-sidebar); border: 1px solid var(--border-color); border-radius: 24px; padding: 24px 16px; z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
