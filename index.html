@@ -37,10 +37,12 @@
                 <li><a id="btnSidebarPostos" style="cursor: pointer;"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Postos de Saúde</a></li>
             </ul>
 
-            <div class="menu-category" style="margin-top: 14px;">Acesso</div>
+            <div class="menu-category" style="margin-top: 14px;">Acesso &amp; Conta</div>
             <ul class="nav-menu">
-                <li><a id="btnAcessoPerfis" style="cursor: pointer;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Login Perfis</a></li>
+                <li><a id="btnAcessoLogin" class="nav-link" data-target="view-login" style="cursor: pointer;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> <span id="labelAcessoMenu">Login / Conta</span></a></li>
+                <li><a id="btnAcessoPerfis" class="nav-link" data-target="view-perfis" style="cursor: pointer;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Trocar Perfil</a></li>
             </ul>
+            <div id="sidebarUserBox" class="sidebar-user-card"></div>
 
         </aside>
 
@@ -476,6 +478,12 @@
 
     <!-- CONTAINER DOS AVISOS (TOASTS) -->
     <div id="toast-container" class="toast-container"></div>
+
+    <!-- Firebase SDK Compat -->
+    <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-service.js"></script>
 
     <script src="calculos.js"></script>
     <script src="materiais.js"></script>

@@ -65,7 +65,26 @@ h1[tabindex="-1"]:focus-visible { outline: none; }
 .rx-body { white-space: pre-wrap; min-height: 140px; font-size: 13px; line-height: 1.65; overflow-wrap: anywhere; }
 .print-page > h1 { text-align: center; font-size: 18px; margin: 12px; }
 .signature { text-align: center; margin: 35px 0 18px; font-size: 12px; }
-@media (max-width: 1050px) {
+
+/* Estilos de Autenticação e Usuário Firebase */
+.auth-container { max-width: 540px; margin: 24px auto; background: #ffffff; border: 1px solid var(--border-color); border-radius: 20px; padding: 32px; box-shadow: 0 10px 30px -10px rgba(15,23,42,0.08); }
+.auth-tabs { display: flex; gap: 8px; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 22px; }
+.auth-tab-btn { flex: 1; padding: 10px 12px; border: 1px solid transparent; background: transparent; font-size: 13px; font-weight: 700; color: #64748b; border-radius: 10px; cursor: pointer; transition: all .2s; }
+.auth-tab-btn:hover { background: #f8fafc; color: #0f172a; }
+.auth-tab-btn.active { background: #fdf2f8; color: #be185d; border-color: #fbcfe8; }
+.auth-intro { font-size: 13px; color: #475569; line-height: 1.6; margin-bottom: 20px; }
+.auth-footer-note { margin-top: 26px; padding-top: 18px; border-top: 1px solid #f1f5f9; font-size: 12px; color: #64748b; line-height: 1.6; }
+.auth-footer-note p { margin: 6px 0; }
+.user-status-tag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+.user-status-tag.online { background: #dcfce7; color: #15803d; border-color: #bbf7d0; }
+.sidebar-user-card { margin-top: 18px; padding: 14px; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0; font-size: 12px; color: #334155; }
+.sidebar-user-card .user-email { font-weight: 700; word-break: break-all; margin-bottom: 4px; display: block; }
+.sidebar-user-card .user-role { display: inline-block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 800; padding: 2px 6px; border-radius: 4px; background: #fce7f3; color: #be185d; margin-bottom: 8px; }
+.sidebar-user-card .user-role.educador { background: #fef3c7; color: #a16207; }
+.sidebar-user-card .btn-logout { display: block; width: 100%; text-align: center; padding: 6px 10px; font-size: 11px; font-weight: 600; color: #dc2626; background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; cursor: pointer; transition: background .15s; }
+.sidebar-user-card .btn-logout:hover { background: #fee2e2; }
+.profile-bar-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.profile-bar-actions { display: flex; align-items: center; gap: 8px; }
   .tool-grid, .video-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .sidebar { width: 225px; padding: 18px 10px; }
   .inner-view { padding: 24px; }

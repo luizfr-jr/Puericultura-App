@@ -17,9 +17,82 @@
   nav.insertAdjacentHTML('beforeend', [['view-educador','▤','Formulário do Educador'],['view-documentos','⚖','Documentos de Enfermagem'],['view-receituario','✎','Receituários'],['view-noticias','▧','Notícias']].map(([id,icon,title])=>`<li><a href="#${id}" class="nav-link" data-target="${id}"><span aria-hidden="true">${icon}</span>${title}</a></li>`).join(''));
   document.getElementById('btnAcessoPerfis').textContent='Selecionar perfil';
   document.getElementById('btnAcessoPerfis').setAttribute('href','#view-perfis');
-  document.getElementById('view-dashboard').insertAdjacentHTML('afterbegin','<div class="profile-bar"><span id="perfilAtual">Perfil não selecionado</span><button class="btn btn-cancel open-view" data-target="view-perfis">Trocar perfil</button></div>');
-  document.getElementById('view-dashboard').insertAdjacentHTML('beforeend','<section class="modules-section"><h2>Ferramentas de acompanhamento</h2><div class="tool-grid"><button class="module-card open-view" data-target="view-educador">▤ Formulário do Educador</button><button class="module-card open-view" data-target="view-documentos">⚖ Documentos de Enfermagem</button><button class="module-card open-view" data-target="view-receituario">✎ Receituários</button><button class="module-card open-view" data-target="view-noticias">▧ Notícias</button></div><p class="storage-note">Os registros desta versão ficam neste navegador e não são sincronizados entre dispositivos. Exporte uma cópia para guardar seu trabalho.</p></section>');
-  main.insertAdjacentHTML('beforeend',view('view-perfis','Mundo da Puericultura','Selecione seu perfil para organizar as ferramentas de acompanhamento.',`<div class="profile-grid"><button class="profile-choice" data-perfil="saude"><span class="profile-symbol">♡</span><h2>Profissional de Saúde</h2><p>Consultas, crescimento, documentos e receituários.</p><strong>Entrar como profissional →</strong></button><button class="profile-choice educador" data-perfil="educador"><span class="profile-symbol">▤</span><h2>Educador</h2><p>Acompanhamento de 0 a 3 anos, observações e apoio à família.</p><strong>Entrar como educador →</strong></button></div><p class="storage-note">A seleção personaliza a navegação; não é uma conta com senha.</p>`));
+  document.getElementById('view-dashboard').insertAdjacentHTML('afterbegin','<div class="profile-bar"><div class="profile-bar-info"><span id="perfilAtual">Perfil não selecionado</span> <span id="userStatusHeader" class="user-status-tag">Modo Visitante</span></div><div class="profile-bar-actions"><button class="btn btn-cancel open-view" data-target="view-login" id="btnLoginHeader">Entrar / Conta</button><button class="btn btn-cancel open-view" data-target="view-perfis">Trocar perfil</button></div></div>');
+  document.getElementById('view-dashboard').insertAdjacentHTML('beforeend','<section class="modules-section"><h2>Ferramentas de acompanhamento</h2><div class="tool-grid"><button class="module-card open-view" data-target="view-educador">▤ Formulário do Educador</button><button class="module-card open-view" data-target="view-documentos">⚖ Documentos de Enfermagem</button><button class="module-card open-view" data-target="view-receituario">✎ Receituários</button><button class="module-card open-view" data-target="view-noticias">▧ Notícias</button></div><p class="storage-note" id="cloudStatusNote">☁ Conectado ao Firebase: seus registros ficam salvos com segurança na nuvem após o login.</p></section>');
+
+  const authCard = `<div class="auth-container">
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab-btn active" data-auth-tab="login">Entrar</button>
+      <button type="button" class="auth-tab-btn" data-auth-tab="cadastro">Criar Conta</button>
+      <button type="button" class="auth-tab-btn" data-auth-tab="recuperar">Recuperar Senha</button>
+    </div>
+
+    <!-- FORMULÁRIO DE LOGIN -->
+    <form id="formAuthLogin" class="auth-form">
+      <p class="auth-intro">Acesse com seu e-mail e senha para carregar e sincronizar seus prontuários no Firebase.</p>
+      <div class="form-group">
+        <label for="loginEmail">E-mail</label>
+        <input type="email" id="loginEmail" name="email" class="form-control" placeholder="seu@email.com" required autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="loginSenha">Senha</label>
+        <input type="password" id="loginSenha" name="senha" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" id="btnSubmitLogin">Entrar na Plataforma</button>
+        <button type="button" class="btn btn-cancel" id="btnIrRecuperar">Esqueci minha senha</button>
+      </div>
+    </form>
+
+    <!-- FORMULÁRIO DE CADASTRO -->
+    <form id="formAuthCadastro" class="auth-form" hidden>
+      <p class="auth-intro">Crie sua conta para manter seus registros salvos na nuvem com isolamento por usuário.</p>
+      <div class="form-group">
+        <label for="cadNome">Nome Completo</label>
+        <input type="text" id="cadNome" name="nome" class="form-control" placeholder="Ex: Enf. Maria Silva" required autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label for="cadEmail">E-mail</label>
+        <input type="email" id="cadEmail" name="email" class="form-control" placeholder="seu@email.com" required autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="cadSenha">Senha (mínimo 6 caracteres)</label>
+        <input type="password" id="cadSenha" name="senha" class="form-control" minlength="6" placeholder="••••••••" required autocomplete="new-password">
+      </div>
+      <div class="form-group">
+        <label for="cadPerfil">Seu Perfil Principal</label>
+        <select id="cadPerfil" name="perfil" class="form-control" required>
+          <option value="saude" selected>Profissional de Saúde (Consultas, Documentos, Receituários)</option>
+          <option value="educador">Educador (Acompanhamento 0 a 3 anos, Formulários e Apoio)</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" id="btnSubmitCadastro">Criar Minha Conta</button>
+        <button type="button" class="btn btn-cancel" id="btnIrLogin">Já tenho uma conta</button>
+      </div>
+    </form>
+
+    <!-- FORMULÁRIO DE RECUPERAÇÃO -->
+    <form id="formAuthRecuperar" class="auth-form" hidden>
+      <p class="auth-intro">Informe seu e-mail cadastrado para receber um link de redefinição de senha pelo Firebase.</p>
+      <div class="form-group">
+        <label for="recEmail">E-mail Cadastrado</label>
+        <input type="email" id="recEmail" name="email" class="form-control" placeholder="seu@email.com" required autocomplete="email">
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" id="btnSubmitRecuperar">Enviar Link de Recuperação</button>
+        <button type="button" class="btn btn-cancel" id="btnVoltarLogin">Voltar ao Login</button>
+      </div>
+    </form>
+
+    <div class="auth-footer-note">
+      <p>🔒 <strong>Segurança e Privacidade:</strong> Cada conta possui sua própria base de registros isolada no Cloud Firestore.</p>
+      <p>🌐 <strong>Modo Visitante:</strong> Os módulos informativos continuam acessíveis publicamente sem necessidade de login.</p>
+    </div>
+  </div>`;
+
+  main.insertAdjacentHTML('beforeend',view('view-login','Acesso &amp; Autenticação','Conecte sua conta para sincronizar prontuários e formulários.',authCard));
+  main.insertAdjacentHTML('beforeend',view('view-perfis','Mundo da Puericultura','Selecione seu perfil para organizar as ferramentas de acompanhamento.',`<div class="profile-grid"><button class="profile-choice" data-perfil="saude"><span class="profile-symbol">♡</span><h2>Profissional de Saúde</h2><p>Consultas, crescimento, documentos e receituários.</p><strong>Entrar como profissional →</strong></button><button class="profile-choice educador" data-perfil="educador"><span class="profile-symbol">▤</span><h2>Educador</h2><p>Acompanhamento de 0 a 3 anos, observações e apoio à família.</p><strong>Entrar como educador →</strong></button></div><p class="storage-note">A seleção personaliza a navegação e o perfil do usuário.</p>`));
 
   const consultas = document.querySelector('#view-consultas .module-wrapper');
   consultas.innerHTML = `<header class="module-header-text"><h1 tabindex="-1">Consultas de Rotina</h1><p>Acompanhamento preventivo do crescimento e desenvolvimento infantil.</p></header><div class="notice">Prevenção é cuidado: leve a Caderneta da Criança, cartão de vacinas, exames e informações sobre medicamentos em uso.</div><section class="module-panel"><h2>Cronograma de consultas</h2><p>Selecione o período para ver o roteiro de avaliação.</p><div class="timeline-grid">${dados.consultas.map(([label],i)=>`<button class="timeline-btn" data-periodo="${i}" aria-pressed="false">${label}</button>`).join('')}</div><p class="storage-note">A partir dos 2 anos, acompanhamento no mínimo anual. A frequência pode ser ampliada conforme a necessidade da criança.</p></section><section id="detalheConsulta" aria-live="polite" class="module-panel"><p>Selecione uma faixa etária acima.</p></section><div class="tool-grid">${card('Avaliação física',lista(['Antropometria e trajetória de crescimento','Exame físico, sinais vitais e avaliação nutricional']))}${card('Desenvolvimento',lista(['Habilidades motoras e comunicação','Interação, brincadeira e relatos da família']))}${card('Orientações',lista(['Alimentação, higiene e sono','Estímulos, vacinação e prevenção de acidentes']))}</div><p class="source-note">Fonte: <a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/s/saude-da-crianca/primeira-infancia" target="_blank" rel="noopener noreferrer">Ministério da Saúde — Primeira Infância</a>. Roteiros de apoio adaptados do material do projeto.</p>`;
