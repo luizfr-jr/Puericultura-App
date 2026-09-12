@@ -14,93 +14,14 @@
   document.querySelectorAll('[data-target="view-amamentacao"] h3').forEach(el=>el.textContent='Guia de Amamentação');
   document.querySelectorAll('img[alt="Apoio à Amamentação"]').forEach(el=>el.alt='Guia de Amamentação');
   const nav = document.querySelector('.nav-menu');
-  nav.insertAdjacentHTML('beforeend', [['view-educador','▤','Formulário do Educador'],['view-documentos','⚖','Documentos de Enfermagem'],['view-receituario','✎','Receituários'],['view-noticias','▧','Notícias']].map(([id,icon,title])=>`<li><a href="#${id}" class="nav-link" data-target="${id}"><span aria-hidden="true">${icon}</span>${title}</a></li>`).join(''));
-  document.getElementById('btnAcessoPerfis').textContent='Selecionar perfil';
-  document.getElementById('btnAcessoPerfis').setAttribute('href','#view-perfis');
-  document.getElementById('view-dashboard').insertAdjacentHTML('afterbegin','<div class="profile-bar"><div class="profile-bar-info"><span id="perfilAtual">Perfil não selecionado</span> <span id="userStatusHeader" class="user-status-tag">Modo Visitante</span></div><div class="profile-bar-actions"><button class="btn btn-cancel open-view" data-target="view-login" id="btnLoginHeader">Entrar / Conta</button><button class="btn btn-cancel open-view" data-target="view-perfis">Trocar perfil</button></div></div>');
-  document.getElementById('view-dashboard').insertAdjacentHTML('beforeend','<section class="modules-section"><h2>Ferramentas de acompanhamento</h2><div class="tool-grid"><button class="module-card open-view" data-target="view-educador">▤ Formulário do Educador</button><button class="module-card open-view" data-target="view-documentos">⚖ Documentos de Enfermagem</button><button class="module-card open-view" data-target="view-receituario">✎ Receituários</button><button class="module-card open-view" data-target="view-noticias">▧ Notícias</button></div><p class="storage-note" id="cloudStatusNote">☁ Conectado ao Firebase: seus registros ficam salvos com segurança na nuvem após o login.</p></section>');
-
-  const authCard = `<div class="auth-container">
-    <div class="auth-tabs">
-      <button type="button" class="auth-tab-btn active" data-auth-tab="login">Entrar</button>
-      <button type="button" class="auth-tab-btn" data-auth-tab="cadastro">Criar Conta</button>
-      <button type="button" class="auth-tab-btn" data-auth-tab="recuperar">Recuperar Senha</button>
-    </div>
-
-    <!-- FORMULÁRIO DE LOGIN -->
-    <form id="formAuthLogin" class="auth-form">
-      <p class="auth-intro">Acesse com seu e-mail e senha para carregar e sincronizar seus prontuários no Firebase.</p>
-      <div class="form-group">
-        <label for="loginEmail">E-mail</label>
-        <input type="email" id="loginEmail" name="email" class="form-control" placeholder="seu@email.com" required autocomplete="email">
-      </div>
-      <div class="form-group">
-        <label for="loginSenha">Senha</label>
-        <input type="password" id="loginSenha" name="senha" class="form-control" placeholder="••••••••" required autocomplete="current-password">
-      </div>
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary" id="btnSubmitLogin">Entrar na Plataforma</button>
-        <button type="button" class="btn btn-cancel" id="btnIrRecuperar">Esqueci minha senha</button>
-      </div>
-    </form>
-
-    <!-- FORMULÁRIO DE CADASTRO -->
-    <form id="formAuthCadastro" class="auth-form" hidden>
-      <p class="auth-intro">Crie sua conta para manter seus registros salvos na nuvem com isolamento por usuário.</p>
-      <div class="form-group">
-        <label for="cadNome">Nome Completo</label>
-        <input type="text" id="cadNome" name="nome" class="form-control" placeholder="Ex: Enf. Maria Silva" required autocomplete="name">
-      </div>
-      <div class="form-group">
-        <label for="cadEmail">E-mail</label>
-        <input type="email" id="cadEmail" name="email" class="form-control" placeholder="seu@email.com" required autocomplete="email">
-      </div>
-      <div class="form-group">
-        <label for="cadSenha">Senha (mínimo 6 caracteres)</label>
-        <input type="password" id="cadSenha" name="senha" class="form-control" minlength="6" placeholder="••••••••" required autocomplete="new-password">
-      </div>
-      <div class="form-group">
-        <label for="cadPerfil">Seu Perfil Principal</label>
-        <select id="cadPerfil" name="perfil" class="form-control" required>
-          <option value="saude" selected>Profissional de Saúde (Consultas, Documentos, Receituários)</option>
-          <option value="educador">Educador (Acompanhamento 0 a 3 anos, Formulários e Apoio)</option>
-        </select>
-      </div>
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary" id="btnSubmitCadastro">Criar Minha Conta</button>
-        <button type="button" class="btn btn-cancel" id="btnIrLogin">Já tenho uma conta</button>
-      </div>
-    </form>
-
-    <!-- FORMULÁRIO DE RECUPERAÇÃO -->
-    <form id="formAuthRecuperar" class="auth-form" hidden>
-      <p class="auth-intro">Informe seu e-mail cadastrado para receber um link de redefinição de senha pelo Firebase.</p>
-      <div class="form-group">
-        <label for="recEmail">E-mail Cadastrado</label>
-        <input type="email" id="recEmail" name="email" class="form-control" placeholder="seu@email.com" required autocomplete="email">
-      </div>
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary" id="btnSubmitRecuperar">Enviar Link de Recuperação</button>
-        <button type="button" class="btn btn-cancel" id="btnVoltarLogin">Voltar ao Login</button>
-      </div>
-    </form>
-
-    <div class="auth-footer-note">
-      <p>🔒 <strong>Segurança e Privacidade:</strong> Cada conta possui sua própria base de registros isolada no Cloud Firestore.</p>
-      <p>🌐 <strong>Modo Visitante:</strong> Os módulos informativos continuam acessíveis publicamente sem necessidade de login.</p>
-    </div>
-  </div>`;
-
-  main.insertAdjacentHTML('beforeend',view('view-login','Acesso &amp; Autenticação','Conecte sua conta para sincronizar prontuários e formulários.',authCard));
-  main.insertAdjacentHTML('beforeend',view('view-perfis','Mundo da Puericultura','Selecione seu perfil para organizar as ferramentas de acompanhamento.',`<div class="profile-grid"><button class="profile-choice" data-perfil="saude"><span class="profile-symbol">♡</span><h2>Profissional de Saúde</h2><p>Consultas, crescimento, documentos e receituários.</p><strong>Entrar como profissional →</strong></button><button class="profile-choice educador" data-perfil="educador"><span class="profile-symbol">▤</span><h2>Educador</h2><p>Acompanhamento de 0 a 3 anos, observações e apoio à família.</p><strong>Entrar como educador →</strong></button></div><p class="storage-note">A seleção personaliza a navegação e o perfil do usuário.</p>`));
-
+  nav.insertAdjacentHTML('beforeend', '<li><a href="#view-noticias" class="nav-link" data-target="view-noticias"><span aria-hidden="true">▧</span>Notícias</a></li>');
   const consultas = document.querySelector('#view-consultas .module-wrapper');
   consultas.innerHTML = `<header class="module-header-text"><h1 tabindex="-1">Consultas de Rotina</h1><p>Acompanhamento preventivo do crescimento e desenvolvimento infantil.</p></header><div class="notice">Prevenção é cuidado: leve a Caderneta da Criança, cartão de vacinas, exames e informações sobre medicamentos em uso.</div><section class="module-panel"><h2>Cronograma de consultas</h2><p>Selecione o período para ver o roteiro de avaliação.</p><div class="timeline-grid">${dados.consultas.map(([label],i)=>`<button class="timeline-btn" data-periodo="${i}" aria-pressed="false">${label}</button>`).join('')}</div><p class="storage-note">A partir dos 2 anos, acompanhamento no mínimo anual. A frequência pode ser ampliada conforme a necessidade da criança.</p></section><section id="detalheConsulta" aria-live="polite" class="module-panel"><p>Selecione uma faixa etária acima.</p></section><div class="tool-grid">${card('Avaliação física',lista(['Antropometria e trajetória de crescimento','Exame físico, sinais vitais e avaliação nutricional']))}${card('Desenvolvimento',lista(['Habilidades motoras e comunicação','Interação, brincadeira e relatos da família']))}${card('Orientações',lista(['Alimentação, higiene e sono','Estímulos, vacinação e prevenção de acidentes']))}</div><p class="source-note">Fonte: <a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/s/saude-da-crianca/primeira-infancia" target="_blank" rel="noopener noreferrer">Ministério da Saúde — Primeira Infância</a>. Roteiros de apoio adaptados do material do projeto.</p>`;
   document.querySelector('#view-amamentacao .module-wrapper').innerHTML = `<header class="module-header-text"><h1 tabindex="-1">Guia de Amamentação</h1><p>Acolhimento, informação e apoio ao aleitamento materno.</p></header><div class="notice success">Aleitamento materno exclusivo até os 6 meses, com alimentação complementar a partir dessa idade, mantendo a amamentação até 2 anos ou mais.</div><div class="tool-grid">${card('Para o bebê','<p>Alimentação, proteção contra infecções e fortalecimento do vínculo com a mãe.</p>')}${card('Para a mãe','<p>Apoia a recuperação pós-parto e está associado à redução do risco de câncer de mama e de ovário.</p>')}${card('Para a sociedade','<p>Contribui para reduzir custos em saúde e o impacto ambiental da alimentação.</p>')}</div><div class="module-grid">${card('Posição e pega',lista(['Mãe confortável, bebê próximo e voltado para ela.','Cabeça e corpo alinhados, com apoio ao corpo do bebê.','Boca bem aberta, lábios voltados para fora e queixo junto à mama.','Mais aréola visível acima da boca; nariz livre.']))}${card('Dificuldades comuns',lista(['Dor, fissuras ou dificuldade para mamar: observar a mamada com um profissional.','A percepção de pouco leite precisa ser avaliada junto às mamadas e ao crescimento.','Manter oferta em livre demanda; buscar apoio na UBS ou banco de leite.','Febre, mama muito dolorosa/vermelha ou bebê prostrado exigem avaliação.']))}</div>${card('Acompanhando a amamentação',lista(['Observar sucção e deglutição, conforto e interação.','Acompanhar ganho de peso e fraldas molhadas conforme a idade.','Mudanças no peito ou duração da mamada, isoladamente, não medem a produção de leite.']))}<p class="source-note">Referência: <a target="_blank" rel="noopener noreferrer" href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/a/aleitamento-materno">Ministério da Saúde — Amamentação</a>.</p><section class="module-panel"><h2>Vídeos e materiais didáticos</h2><p>Seleção indicada pela equipe do projeto. Abra cada vídeo para assistir na fonte.</p><div class="video-grid">${window.VIDEOS_AMAMENTACAO.map(v=>`<a class="video-card" href="${esc(v.url)}" target="_blank" rel="noopener noreferrer"><span aria-hidden="true" class="play-symbol">▶</span><h3>${esc(v.title)}</h3><span>Assistir no YouTube ↗</span></a>`).join('')}<a class="video-card" href="https://www.facebook.com/watch/?v=425166329578708" target="_blank" rel="noopener noreferrer"><span class="play-symbol" aria-hidden="true">▶</span><h3>Amamentação: uma coisa incrível</h3><span>Assistir no Facebook ↗</span></a></div></section>`;
   document.querySelector('#view-educacao .module-wrapper').innerHTML = `<header class="module-header-text"><h1 tabindex="-1">Educação Familiar</h1><p>Apoio a pais e cuidadores para o desenvolvimento saudável das crianças.</p></header><div class="notice">A família é um ambiente fundamental de aprendizagem, vínculo e proteção. O cuidado se constrói com escuta e apoio.</div><div class="module-grid">${card('Cuidados domiciliares',lista(['Higiene e banho do bebê','Cuidados com o umbigo','Reconhecimento de sinais de alerta','Ambiente seguro e prevenção de acidentes']))}${card('Desenvolvimento infantil',lista(['Brincadeiras e estímulos adequados à idade','Leitura e conversa desde cedo','Acompanhamento dos marcos do desenvolvimento','Limites e disciplina positiva']))}${card('Dinâmica familiar',lista(['Adaptação à chegada do bebê','Divisão de tarefas e cuidado com irmãos','Rede de apoio e saúde mental dos cuidadores']))}${card('Comunicação',lista(['Conversar com a criança e praticar escuta ativa','Nomear sentimentos e acolher necessidades','Resolver conflitos e fortalecer vínculos']))}${card('Estratégias educativas',lista(['Demonstrações durante consultas e visitas','Materiais ilustrados e grupos de apoio','Orientações individualizadas e encorajamento']))}${card('Temas por idade',lista(['0–6 meses: aleitamento, vínculo e cuidados básicos','6–12 meses: alimentação complementar e segurança','1–2 anos: desenvolvimento motor e rotinas','2 anos ou mais: socialização e autonomia']))}</div>`;
 
   const ident = field('edNome','Nome do bebê/criança','text','required maxlength="160"')+field('edNascimento','Data de nascimento','date','required')+options('edTurma','Turma',Object.keys(dados.educador),'required')+field('edResponsavel','Educador responsável','text','required maxlength="160"')+field('edData','Data do preenchimento','date','required')+field('edEscola','Escola/creche','text','maxlength="160"');
-  const edForm = `<form id="formEducador"><input type="hidden" name="edId" id="edId">${card('1. Identificação',`<div class="form-grid">${ident}</div><output id="edIdade" aria-live="polite"></output>`)}${card('2. Carteira de saúde e acompanhamento',options('edVacinacao','A carteira de vacinação está atualizada?',['Sim','Não','Faltam vacinas para a idade','Não informado'],'required')+'<div id="edVacinaAlerta" class="notice warning" role="status" hidden>⚠ Vacinação pendente: orientar conferência e atualização na UBS.</div>'+area('edVacinasFaltantes','Vacinas pendentes informadas')+options('edConsultas','Consultas de puericultura',['Em dia','Em atraso','Família relata dificuldade de agendamento','Não informado'],'required'))}${card('3. Indicadores do desenvolvimento','<p>Assinale somente o que foi observado, considerando a idade. O registro apoia o encaminhamento e não estabelece diagnóstico.</p>'+Object.entries(dados.educador).map(([t,items])=>`<fieldset><legend>${esc(t)}</legend>${checks('edDesenvolvimento',items)}</fieldset>`).join(''))}${card('4. Sinais gerais de alerta',checks('edSinais',dados.sinais))}${card('5. Observações do educador',area('edObservacoes','Descreva episódios, contexto e frequência das observações','maxlength="8000"'))}${card('6. Próximos passos',checks('edEncaminhamentos',dados.encaminhamentos))}<div class="form-actions"><button type="reset" class="btn btn-cancel">Novo formulário</button><button type="submit" class="btn btn-primary">Salvar formulário</button></div><p class="storage-note">Salvar registra os dados neste navegador; nenhum encaminhamento é enviado automaticamente.</p></form>`;
+  const edForm = `<form id="formEducador"><input type="hidden" name="edId" id="edId">${card('1. Identificação',`<div class="form-grid">${ident}</div><output id="edIdade" aria-live="polite"></output>`)}${card('2. Carteira de saúde e acompanhamento',options('edVacinacao','A carteira de vacinação está atualizada?',['Sim','Não','Faltam vacinas para a idade','Não informado'],'required')+'<div id="edVacinaAlerta" class="notice warning" role="status" hidden>⚠ Vacinação pendente: orientar conferência e atualização na UBS.</div>'+area('edVacinasFaltantes','Vacinas pendentes informadas')+options('edConsultas','Consultas de puericultura',['Em dia','Em atraso','Família relata dificuldade de agendamento','Não informado'],'required'))}${card('3. Indicadores do desenvolvimento','<p>Assinale somente o que foi observado, considerando a idade. O registro apoia o encaminhamento e não estabelece diagnóstico.</p>'+Object.entries(dados.educador).map(([t,items])=>`<fieldset><legend>${esc(t)}</legend>${checks('edDesenvolvimento',items)}</fieldset>`).join(''))}${card('4. Sinais gerais de alerta',checks('edSinais',dados.sinais))}${card('5. Observações do educador',area('edObservacoes','Descreva episódios, contexto e frequência das observações','maxlength="8000"'))}${card('6. Próximos passos',checks('edEncaminhamentos',dados.encaminhamentos))}<div class="form-actions"><button type="reset" class="btn btn-cancel">Novo formulário</button><button type="submit" class="btn btn-primary">Salvar formulário</button></div><p class="storage-note">Salvar registra os dados na sua conta. Nenhum encaminhamento é enviado automaticamente.</p></form>`;
   const estudo = `<div id="painelEstudo" hidden>${card('Estudo & Protocolo — proteção na primeira infância','<p>Educadores podem observar mudanças físicas e comportamentais e registrar os fatos para articulação com a rede de proteção. Sinais isolados não comprovam violência; a ausência deles também não exclui uma situação de risco.</p>')}<div class="module-grid">${card('Violência física',lista(['Lesões recorrentes ou explicações incompatíveis','Queimaduras, hematomas e marcas observadas']))}${card('Negligência',lista(['Necessidades de alimentação, higiene ou saúde não atendidas','Investigar também barreiras de acesso e vulnerabilidade social']))}${card('Violência psicológica',lista(['Medo intenso, retraimento ou mudanças persistentes de comportamento','Regressão e alterações de sono']))}${card('Violência sexual',lista(['Relato espontâneo ou sinais que demandem avaliação especializada','Acolher sem pressionar a criança a repetir o relato']))}</div>${card('Instrumento de observação',`<p>Registre presença, ausência ou informação desconhecida.</p><form id="formObservacao">${dados.observacao.map((t,i)=>options('obs'+i,t,['Sim','Não','Não observado'])).join('')}<output id="observacaoResumo" class="notice" aria-live="polite">Nenhuma observação preenchida.</output><div class="form-actions"><button type="button" id="imprimirObservacao" class="btn btn-cancel">Imprimir observações</button></div></form><p class="storage-note">Este roteiro do projeto não possui escala de risco validada. A quantidade de sinais não define urgência nem substitui avaliação profissional.</p>`)}${card('Fluxo de encaminhamento','<ol class="flow-list"><li>Observar e registrar fatos, data e contexto.</li><li>Comunicar a coordenação e seguir o fluxo de proteção da instituição.</li><li>Articular a avaliação com a UBS/ESF e a rede de proteção.</li><li>Em suspeita ou confirmação de violência, comunicar ao Conselho Tutelar conforme o ECA. Situações urgentes não devem aguardar o preenchimento do formulário.</li></ol><p>Referência: <a href="https://www.planalto.gov.br/ccivil_03/leis/l8069.htm" target="_blank" rel="noopener noreferrer">Estatuto da Criança e do Adolescente</a>.</p>')}</div>`;
   main.insertAdjacentHTML('beforeend',view('view-educador','Formulário do Educador','Acompanhamento da puericultura e desenvolvimento de 0 a 3 anos.',`<div class="caderneta-tabs"><button class="tab-btn active" data-aba="formulario" aria-pressed="true">▤ Formulário</button><button class="tab-btn" data-aba="estudo" aria-pressed="false">▣ Estudo & Protocolo</button></div><div id="painelFormulario">${edForm}</div>${estudo}`));
   main.insertAdjacentHTML('beforeend',view('view-documentos','Documentos e Legislação da Enfermagem','Referências para estudo e consulta no site oficial.',`${card('Puericultura e Processo de Enfermagem','<p>Acompanhamento do crescimento e desenvolvimento da criança, com avaliação, diagnóstico de enfermagem, planejamento, implementação e evolução. A consulta de enfermagem é privativa do enfermeiro; técnicos e auxiliares participam do cuidado sob supervisão.</p>')}<div class="document-list">${dados.documentos.map(([t,d,u])=>`<a class="document-card" href="${u}" target="_blank" rel="noopener noreferrer"><h2>${t}</h2><p>${d}</p><span>Acessar fonte oficial ↗</span></a>`).join('')}</div>`));
@@ -124,4 +45,5 @@
   document.getElementById('dataConsulta').previousElementSibling.setAttribute('for','dataConsulta');
   document.body.insertAdjacentHTML('beforeend','<dialog id="registroDialog"><div class="dialog-head"><h2>Registro de acompanhamento</h2><button id="fecharRegistro" class="btn btn-cancel">Fechar</button></div><div id="registroDetalhes"></div><button id="imprimirRegistro" class="btn btn-primary">Imprimir registro</button></dialog><div id="print-root"></div>');
 })();
+
 

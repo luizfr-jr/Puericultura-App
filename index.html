@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" href="icone.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="revisao.css">
+    <link rel="stylesheet" href="revisao.css?v=acesso-20260912">
 </head>
 <body>
 
@@ -25,11 +25,9 @@
             <div class="menu-category">Módulos Clínicos</div>
             <ul class="nav-menu">
                 <li><a id="menuDashboard" class="nav-link active" data-target="view-dashboard"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Visão Geral</a></li>
-                <li><a href="#" class="nav-link" data-target="view-nova-consulta"><svg viewBox="0 0 24 24"><path d="M4.8 2.3A.3.3 0 0 1 5 2h14a.3.3 0 0 1 .2.3l-2.4 7.2a6 6 0 0 1-11.4 0L4.8 2.3z"></path><path d="M12 15v7"></path><path d="M9 19h6"></path><path d="M9 12h6"></path></svg> Nova Consulta</a></li>
                 <li><a href="#" class="nav-link" data-target="view-crescimento"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Crescimento & OMS</a></li>
                 <li><a href="#" class="nav-link" data-target="view-neonatais"><svg viewBox="0 0 24 24"><path d="M9 12h.01"/><path d="M15 12h.01"/><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/><path d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10z"/></svg> Cuidados Neonatais</a></li>
                 <li><a href="#" class="nav-link" data-target="view-amamentacao"><svg viewBox="0 0 24 24"><path d="M9 2h6v2H9z"/><path d="M10 4v3h4V4"/><path d="M8 7h8v2a4 4 0 0 1-4 4 4 4 0 0 1-4-4V7z"/><path d="M10 13v7a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-7"/></svg> Amamentação</a></li>
-                <li><a href="#" class="nav-link" data-target="view-caderneta"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Caderneta Digital</a></li>
             </ul>
 
             <div class="menu-category" style="margin-top: 14px;">Suporte</div>
@@ -39,10 +37,8 @@
 
             <div class="menu-category" style="margin-top: 14px;">Acesso &amp; Conta</div>
             <ul class="nav-menu">
-                <li><a id="btnAcessoLogin" class="nav-link" data-target="view-login" style="cursor: pointer;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> <span id="labelAcessoMenu">Login / Conta</span></a></li>
-                <li><a id="btnAcessoPerfis" class="nav-link" data-target="view-perfis" style="cursor: pointer;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Trocar Perfil</a></li>
+                <li><a id="btnAcessoLogin" class="nav-link" data-target="view-login" style="cursor: pointer;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> <span id="labelAcessoMenu">Login</span></a></li>
             </ul>
-            <div id="sidebarUserBox" class="sidebar-user-card"></div>
 
         </aside>
 
@@ -55,7 +51,6 @@
                         <h1>⚡ Portal de Puericultura</h1>
                         <p>Plataforma inteligente de monitoramento e assistência à saúde infantil</p>
                     </div>
-                    <button class="btn btn-primary open-view" data-target="view-nova-consulta">+ Nova Consulta</button>
                 </div>
 
 
@@ -480,17 +475,18 @@
     <div id="toast-container" class="toast-container"></div>
 
     <!-- Firebase SDK Compat -->
-    <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
-    <script src="firebase-service.js"></script>
 
     <script src="calculos.js"></script>
     <script src="materiais.js"></script>
     <script src="conteudo.js"></script>
-    <script src="revisao.js"></script>
-    <script src="receituario.js"></script>
-    <script src="app.js"></script>
+    <script src="revisao.js?v=acesso-20260912"></script>
+    <script src="receituario.js?v=acesso-20260912"></script>
+    <script src="permissoes.js?v=acesso-20260912"></script>
+    <script src="firebase-config.js?v=acesso-20260912"></script>
+    <script src="auth.js?v=acesso-20260912"></script>
+    <script src="login.js?v=acesso-20260912"></script>
+    <script src="app.js?v=acesso-20260912"></script>
 </body>
 </html>
+
 

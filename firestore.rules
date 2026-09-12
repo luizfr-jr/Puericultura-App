@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function dono(uid) { return request.auth != null && request.auth.uid == uid; }
+    function perfil(uid) { return get(/databases/$(database)/documents/perfis/$(uid)).data.perfil; }
+    match /perfis/{uid} {
+      allow get: if dono(uid);
+      allow list: if false;
+      allow create: if dono(uid)
+        && request.resource.data.keys().hasOnly(['nome','email','perfil','coren','criadoEm'])
+        && request.resource.data.nome is string && request.resource.data.nome.size() > 0 && request.resource.data.nome.size() <= 160
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.perfil in ['enfermeiro','educador']
+        && request.resource.data.coren is string && request.resource.data.coren.size() <= 40
+        && (request.resource.data.perfil != 'enfermeiro' || request.resource.data.coren.size() > 0)
+        && request.resource.data.criadoEm == request.time;
+      // A conta não pode mudar seu papel depois do cadastro.
+      allow update, delete: if false;
+    }
+    match /usuarios/{uid}/registros/{tipo} {
+      function permitido() {
+        return dono(uid) && (
+          (perfil(uid) == 'enfermeiro' && tipo in ['criancas','consultas']) ||
+          (perfil(uid) == 'educador' && tipo == 'educadores')
+        );
+      }
+      allow get: if permitido();
+      allow list, delete: if false;
+      allow create: if permitido() && valido() && request.resource.data.versao == 1;
+      allow update: if permitido() && valido() && request.resource.data.versao == resource.data.versao + 1;
+      function valido() {
+        return request.resource.data.keys().hasOnly(['itens','versao','atualizadoEm'])
+          && request.resource.data.itens is list && request.resource.data.itens.size() <= 1000
+          && request.resource.data.versao is int
+          && request.resource.data.atualizadoEm == request.time;
+      }
+    }
+  }
+}
+
