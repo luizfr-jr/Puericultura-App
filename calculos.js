@@ -1,8 +1,13 @@
 const dataHoje = () => {const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
 function idadeMeses(nascimento,referencia=dataHoje()) {
-  if(!/^\d{4}-\d{2}-\d{2}$/.test(nascimento||'') || nascimento>referencia) return null;
+  for (const valor of [nascimento, referencia]) {
+    if (typeof valor !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(valor)) return null;
+    const [ano, mes, dia] = valor.split('-').map(Number);
+    const data = new Date(ano, mes - 1, dia);
+    if (data.getFullYear() !== ano || data.getMonth() !== mes - 1 || data.getDate() !== dia) return null;
+  }
+  if(nascimento>referencia) return null;
   const [a,m,d]=nascimento.split('-').map(Number), [ar,mr,dr]=referencia.split('-').map(Number);
-  const check=new Date(a,m-1,d);if(check.getFullYear()!==a||check.getMonth()!==m-1||check.getDate()!==d)return null;
   return (ar-a)*12+mr-m-(dr<d?1:0);
 }
 

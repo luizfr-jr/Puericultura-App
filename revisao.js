@@ -38,6 +38,9 @@
   document.querySelector('#view-caderneta .caderneta-tabs').outerHTML = `<div class="form-actions"><button class="btn btn-primary" id="novaCrianca">+ Novo registro</button><button class="btn btn-cancel" id="exportarRegistros">Exportar registros</button></div><div class="module-panel" id="cadastroCrianca" hidden><h2>Novo registro de criança</h2>${cadastro}</div>`;
   document.getElementById('listaCriancasCadastradas').insertAdjacentHTML('afterend','<section class="module-panel"><h2>Consultas e formulários salvos</h2><div id="listaAtendimentos"></div></section>');
   const formConsulta = document.getElementById('formNovaConsulta');
+  const tipoProtocolo = formConsulta.querySelector('select:not(#selectCrianca)');
+  tipoProtocolo.id = 'tipoProtocolo'; tipoProtocolo.name = 'protocolo';
+  tipoProtocolo.previousElementSibling.setAttribute('for', 'tipoProtocolo');
   formConsulta.insertAdjacentHTML('afterbegin','<input type="hidden" name="consultaId" id="consultaId">');
   formConsulta.querySelector('.form-grid').insertAdjacentHTML('beforeend',field('nomeProfissional','Profissional responsável','text','required maxlength="160"'));
   const select = document.getElementById('selectCrianca'); select.name='crianca'; select.innerHTML='<option value="">Cadastre uma criança na Caderneta Digital</option>';

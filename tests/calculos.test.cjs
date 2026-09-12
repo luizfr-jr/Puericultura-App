@@ -12,6 +12,11 @@ test('datas futuras, ausentes e impossíveis são rejeitadas',()=>{
   assert.equal(idadeMeses('','2026-09-11'),null);
 });
 const base={tipo:'mg/kg/dia',peso:10,dose:30,concentracao:50,tomadas:3};
+test('data de referência inválida não produz idade incorreta',()=>{
+  for(const referencia of ['',null,'2026-02-30','2026-13-01','2026-9-12'])
+    assert.equal(idadeMeses('2025-01-01',referencia),null);
+  assert.equal(idadeMeses('2024-02-29','2024-02-29'),0);
+});
 test('dose diária é dividida pelo número de tomadas antes da conversão',()=>{
   assert.deepEqual(calcularConversao(base),{mg:100,dia:300,ml:2});
 });

@@ -112,6 +112,7 @@ function atualizarCadernetaDigital(){
 }
 const rotulos={nome:'Criança',nascimento:'Data de nascimento',responsavel:'Responsável',profissional:'Profissional',data:'Data da consulta',retorno:'Retorno',queixa:'Queixa principal',exame:'Exame físico e antropometria',diagnostico:'Diagnóstico de enfermagem',intervencoes:'Intervenções',orientacoes:'Orientações',edNome:'Criança',edNascimento:'Nascimento',edTurma:'Turma',edResponsavel:'Educador',edData:'Data do preenchimento',edEscola:'Escola/creche',edVacinacao:'Vacinação',edVacinasFaltantes:'Vacinas pendentes',edConsultas:'Consultas de puericultura',edDesenvolvimento:'Observações de desenvolvimento',edSinais:'Sinais gerais',edObservacoes:'Observações',edEncaminhamentos:'Próximos passos'};
 function detalhesRegistro(item){return `<dl class="record-details">${Object.entries(rotulos).filter(([k])=>Object.hasOwn(item,k)).map(([k,label])=>`<dt>${label}</dt><dd>${escapeHTML(Array.isArray(item[k])?item[k].join('\n'):item[k]||'Não informado')}</dd>`).join('')}</dl>`;}
+rotulos.protocolo='Tipo de protocolo';
 document.querySelector('#view-caderneta').addEventListener('click',event=>{
   const b=event.target.closest('[data-action]');if(!b)return;
   try{const registros=lerRegistros(CHAVES[b.dataset.tipo]);const i=Number(b.dataset.index),item=registros[i];if(!item)return;

@@ -42,7 +42,9 @@ O botão de exportação gera um arquivo JSON. Não há importação automática
 
 ## Verificação realizada
 
-Sete testes automatizados cobrem idade, unidades de dose, conversão de concentração, limites e entradas inválidas. No navegador foram conferidos cadastro, consulta completa, edição sem duplicação, persistência após recarga, recuperação do formulário do educador, alerta de vacinação, dez períodos de consulta, quinze links de vídeo e geração do conteúdo de uma/duas vias do receituário, usando dados fictícios. A aparência final da impressão em papel e a tela de celular ainda precisam de conferência; o navegador de teste não aplicou a dimensão solicitada.
+Oito testes automatizados cobrem idade, datas de nascimento/referência inválidas, unidades de dose, conversão de concentração, limites e entradas inválidas. No navegador foram conferidos cadastro, consulta completa, edição sem duplicação, persistência após recarga, recuperação do formulário do educador, alerta de vacinação, dez períodos de consulta, quinze links de vídeo e geração do conteúdo de uma/duas vias do receituário, usando dados fictícios.
+
+Em 12/09/2026, a prévia do Vercel foi aberta pelo Edge autenticado. A seleção de perfil, o início e os formulários de consulta, educador e receituário foram inspecionados em largura de 390 pixels, sem transbordamento horizontal da página; educador, estudo e receituário também foram verificados a 320 pixels. O menu tem rolagem horizontal própria em telas pequenas. A aparência final da impressão em papel permanece pendente.
 
 A publicação pelo Vercel usa os arquivos estáticos da raiz. A proposta de revisão deve permanecer separada da produção enquanto as pendências acima forem avaliadas.
 
