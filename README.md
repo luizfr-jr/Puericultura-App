@@ -16,7 +16,7 @@ O início e os materiais educativos são públicos. O botão **Login** oferece e
 | --- | --- | --- |
 | Formulário do Educador | Sim | Não |
 | Nova Consulta, Documentos de Enfermagem e Receituários | Não | Sim |
-| Caderneta e exportação dos próprios registros | Sim | Sim |
+| Caderneta da Criança e exportação de consultas | Não | Sim |
 
 As ferramentas ficam na área **Minha conta**. A tela inicial exibe os mesmos materiais públicos para todos, inclusive depois do login, sem botões de nova consulta, formulário do educador, documentos ou receituários. Não há botão de troca de perfil. O cadastro de enfermeiro solicita COREN/UF; a informação é declarada pelo usuário, sem validação automática da inscrição profissional. Alterações administrativas de perfil exigem revisão dos registros existentes; o aplicativo e as regras não permitem que a própria conta altere esse campo.
 
@@ -43,8 +43,9 @@ Os registros antigos em `localStorage` permanecem preservados, mas não são exi
 - Início público, login por e-mail/senha e ferramentas vinculadas ao perfil cadastrado.
 - Dez períodos de consulta, da primeira semana aos três anos, com orientações próprias.
 - Guia de amamentação, educação familiar, vídeos e notícias indicadas.
-- Formulário do educador com idade em meses completos, vacinação, desenvolvimento, sinais, observações e encaminhamentos; gravação e edição na caderneta.
+- Formulário exclusivo do educador com idade em meses completos, vacinação, desenvolvimento, sinais, observações e encaminhamentos; histórico próprio e preparação de relatório por e-mail para a coordenação. Pendências vacinais são destacadas no assunto e no corpo da mensagem.
 - Cadastro de crianças, consultas completas, visualização, edição, exclusão e exportação. A exclusão de criança com consultas vinculadas é impedida.
+- Imagens próprias nos seis módulos da página inicial, miniaturas nos vídeos e notícias em cartões ilustrados, conforme a apresentação da reunião de 13/09/2026.
 - Documentos de enfermagem com links e indicação de norma revogada/alterada.
 - Catálogo dos medicamentos mencionados no material, conversão de mg/kg/dia, mg/kg/dose ou mg/dose em mg e mL, limites informados por dose/dia e impressão simples ou em duas vias para retenção.
 
@@ -65,7 +66,7 @@ Os registros antigos em `localStorage` permanecem preservados, mas não são exi
 
 ## Verificação realizada
 
-Doze testes automatizados cobrem permissões de visitante/educador/enfermeiro e idade, datas de nascimento/referência inválidas, unidades de dose, conversão de concentração, limites e entradas inválidas. No navegador foram conferidos cadastro, consulta completa, edição sem duplicação, persistência após recarga, recuperação do formulário do educador, alerta de vacinação, dez períodos de consulta, quinze links de vídeo e geração do conteúdo de uma/duas vias do receituário, usando dados fictícios.
+Quinze testes automatizados cobrem permissões de visitante/educador/enfermeiro, relatórios e alertas por e-mail, idade, datas de nascimento/referência inválidas, unidades de dose, conversão de concentração, limites e entradas inválidas. No navegador foram conferidos cadastro, consulta completa, edição sem duplicação, persistência após recarga, recuperação do formulário do educador, alerta de vacinação, dez períodos de consulta, quinze links de vídeo e geração do conteúdo de uma/duas vias do receituário, usando dados fictícios.
 
 Em 12/09/2026, a prévia do Vercel foi aberta pelo Edge autenticado. Na revisão anterior, a seleção de perfil, o início e os formulários de consulta, educador e receituário foram inspecionados em largura de 390 pixels, sem transbordamento horizontal da página; educador, estudo e receituário também foram verificados a 320 pixels. O menu tem rolagem horizontal própria em telas pequenas. A aparência final da impressão em papel permanece pendente.
 

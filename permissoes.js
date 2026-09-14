@@ -8,7 +8,7 @@
     'view-documentos': ['enfermeiro'],
     'view-nova-consulta': ['enfermeiro'],
     'view-receituario': ['enfermeiro'],
-    'view-caderneta': ['enfermeiro', 'educador'],
+    'view-caderneta': ['enfermeiro'],
     'view-conta': ['enfermeiro', 'educador']
   });
   function podeAcessar(pagina, perfil) {

@@ -50,7 +50,7 @@
         <button class="module-card open-view" data-target="view-educador"><h2>Formulário do Educador</h2><p>Registre observações e acompanhe o desenvolvimento.</p></button>
         <button class="module-card open-view" data-target="view-documentos"><h2>Documentos de Enfermagem</h2><p>Acesse os documentos e as referências da profissão.</p></button>
         <button class="module-card open-view" data-target="view-receituario"><h2>Receituários</h2><p>Prepare e imprima suas prescrições.</p></button>
-        <button class="module-card open-view" data-target="view-caderneta"><h2>Caderneta Digital</h2><p>Acesse os registros salvos na sua conta.</p></button>
+        <button class="module-card open-view" data-target="view-caderneta"><h2>Caderneta da Criança</h2><p>Cadastre crianças e consulte o histórico dos atendimentos.</p></button>
       </div>
     </section>`);
   for(const id of ['view-educador','view-documentos','view-receituario','view-nova-consulta','view-caderneta']){

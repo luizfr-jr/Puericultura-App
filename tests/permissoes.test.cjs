@@ -8,13 +8,13 @@ test('visitante acessa o início público, mas nenhuma ferramenta privada',()=>{
 });
 test('educador tem seu formulário e não tem ferramentas de enfermagem',()=>{
   assert.equal(podeAcessar('view-educador','educador'),true);
-  for(const pagina of ['view-documentos','view-nova-consulta','view-receituario'])
+  for(const pagina of ['view-documentos','view-nova-consulta','view-receituario','view-caderneta'])
     assert.equal(podeAcessar(pagina,'educador'),false);
   assert.equal(podeUsarRegistros('consultas','educador'),false);
   assert.equal(podeUsarRegistros('educadores','educador'),true);
 });
 test('enfermeiro acessa consulta, documentos e receituário, mas não formulário do educador',()=>{
-  for(const pagina of ['view-documentos','view-nova-consulta','view-receituario'])
+  for(const pagina of ['view-documentos','view-nova-consulta','view-receituario','view-caderneta'])
     assert.equal(podeAcessar(pagina,'enfermeiro'),true);
   assert.equal(podeAcessar('view-educador','enfermeiro'),false);
   assert.equal(podeUsarRegistros('consultas','enfermeiro'),true);

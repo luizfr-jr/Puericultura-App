@@ -30,6 +30,7 @@ function navegar(id) {
   document.querySelectorAll('.nav-link').forEach(el=>{const active=el.dataset.target===id;el.classList.toggle('active',active);if(active)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');});
   if(id==='view-caderneta') atualizarCadernetaDigital();
   if(id==='view-nova-consulta') atualizarSelecaoCriancas();
+  if(id==='view-educador') atualizarRelatoriosEducador();
   const heading=alvo.querySelector('h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}
   window.scrollTo({top:0,behavior:'instant'});
 }
@@ -54,13 +55,14 @@ window.addEventListener('conta-alterada',()=>{
   $('consultaId').value='';$('criancaId').value='';$('edId').value='';
   $('cadastroCrianca').hidden=true;$('registroDialog').close();$('registroDetalhes').innerHTML='';$('print-root').innerHTML='';
   $('edData').value=dataHoje();$('dataConsulta').value=dataHoje();
-  $('listaCriancasCadastradas').innerHTML='';$('listaAtendimentos').innerHTML='';
+  $('listaCriancasCadastradas').innerHTML='';$('listaAtendimentos').innerHTML='';$('listaRelatoriosEducador').innerHTML='<p>Nenhum relatório salvo.</p>';
+  $('edNotificacao').hidden=true;$('edEmailLink').href='#';
   $('observacaoResumo').textContent='Nenhuma observação preenchida.';
   const atual=[...document.querySelectorAll('.page-view')].find(el=>el.style.display==='flex');
   if(atual&&!PuericulturaPermissoes.podeAcessar(atual.id,window.Conta.usuario?.perfil))navegar('view-dashboard');
   atualizarSelecaoCriancas();
 });
-window.addEventListener('registros-alterados',()=>{atualizarSelecaoCriancas();if($('view-caderneta').style.display==='flex')atualizarCadernetaDigital();});
+window.addEventListener('registros-alterados',()=>{atualizarSelecaoCriancas();if($('view-caderneta').style.display==='flex')atualizarCadernetaDigital();if($('view-educador').style.display==='flex')atualizarRelatoriosEducador();});
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(id.startsWith('view-'))navegar(id);});
 $('btnSidebarPostos').addEventListener('click',()=>$('modalPostos').classList.add('active'));
 $('fecharModalPostos').addEventListener('click',()=>$('modalPostos').classList.remove('active'));
@@ -83,7 +85,7 @@ function atualizarEducador(){
   $('edVacinaAlerta').hidden=!['Não','Faltam vacinas para a idade'].includes($('edVacinacao').value);
 }
 ['edNascimento','edData','edVacinacao'].forEach(id=>$(id).addEventListener('change',atualizarEducador));
-$('formEducador').addEventListener('reset',()=>setTimeout(()=>{$('edId').value='';$('edData').value=dataHoje();atualizarEducador();},0));
+$('formEducador').addEventListener('reset',()=>setTimeout(()=>{$('edId').value='';$('edData').value=dataHoje();$('edNotificacao').hidden=true;$('edEmailLink').href='#';atualizarEducador();},0));
 $('formEducador').addEventListener('submit',async event=>{
   if(!exigirAcesso('view-educador')){event.preventDefault();return;}
   event.preventDefault();atualizarEducador();if(!$('formEducador').reportValidity())return;
@@ -91,8 +93,41 @@ $('formEducador').addEventListener('submit',async event=>{
   for(const name of ['edDesenvolvimento','edSinais','edEncaminhamentos'])item[name]=fd.getAll(name);
   item.id=item.edId||crypto.randomUUID();item.edId=item.id;
   try {const registros=lerRegistros(CHAVES.educadores);const i=registros.findIndex(r=>r.id===item.id);if(i<0)registros.push(item);else registros[i]=item;
-    if(await salvarRegistros(CHAVES.educadores,registros)){$('edId').value=item.id;mostrarAviso('Formulário salvo na sua conta.');}}
+    if(await salvarRegistros(CHAVES.educadores,registros)){
+      const email=window.PuericulturaNotificacoes.criarLinkEmail(item);
+      $('edId').value=item.id;$('edEmailLink').href=email.href;$('edNotificacao').hidden=false;
+      $('edNotificacao').classList.toggle('warning',email.alerta);
+      mostrarAviso(email.alerta?'Formulário salvo. O alerta vacinal está pronto para a coordenação.':'Formulário salvo. O relatório está pronto para a coordenação.');
+      atualizarRelatoriosEducador();
+    }}
   catch{}
+});
+
+function atualizarRelatoriosEducador(){
+  if(window.Conta.usuario?.perfil!=='educador')return;
+  try{
+    const registros=lerRegistros(CHAVES.educadores);
+    $('listaRelatoriosEducador').innerHTML=registros.length?registros.map((item,i)=>{
+      const alerta=window.PuericulturaNotificacoes.pendenciaVacinal(item.edVacinacao);
+      return `<article class="child-row"><div><span class="tag">Relatório do educador</span><h3>${escapeHTML(item.edNome)}</h3><p>${escapeHTML(item.edData)} · ${escapeHTML(item.edEscola||'Escola não informada')}</p>${alerta?'<span class="vaccination-badge">⚠ Vacinação pendente</span>':''}</div><div class="child-actions"><button class="btn btn-cancel" data-educador-action="email" data-index="${i}">E-mail</button><button class="btn btn-cancel" data-educador-action="editar" data-index="${i}">Editar</button><button class="btn btn-cancel" data-educador-action="excluir" data-index="${i}">Excluir</button></div></article>`;
+    }).join(''):'<p>Nenhum relatório salvo.</p>';
+  }catch{}
+}
+
+$('listaRelatoriosEducador').addEventListener('click',async event=>{
+  if(!exigirAcesso('view-educador'))return;
+  const botao=event.target.closest('[data-educador-action]');if(!botao)return;
+  const registros=lerRegistros(CHAVES.educadores),i=Number(botao.dataset.index),item=registros[i];if(!item)return;
+  if(botao.dataset.educadorAction==='email'){
+    try{location.href=window.PuericulturaNotificacoes.criarLinkEmail(item).href;}catch(e){mostrarAviso(e.message,'error');}
+  }
+  if(botao.dataset.educadorAction==='editar'){
+    $('formEducador').reset();setTimeout(()=>{for(const el of $('formEducador').elements){if(!el.name)continue;const value=item[el.name];if(el.type==='checkbox')el.checked=Array.isArray(value)&&value.includes(el.value);else el.value=value||'';}$('edId').value=item.id;atualizarEducador();window.scrollTo({top:0,behavior:'smooth'});},0);
+  }
+  if(botao.dataset.educadorAction==='excluir'){
+    if(!confirm('Excluir este relatório? Essa ação não pode ser desfeita.'))return;
+    registros.splice(i,1);if(await salvarRegistros(CHAVES.educadores,registros))atualizarRelatoriosEducador();
+  }
 });
 $('formObservacao').addEventListener('change',()=>{
   const values=[...new FormData($('formObservacao')).values()];const sim=values.filter(v=>v==='Sim').length;const preenchidos=values.filter(Boolean).length;
@@ -135,13 +170,13 @@ $('formCrianca').addEventListener('submit',async event=>{
 });
 function botoesRegistro(tipo,index){return `<div class="child-actions"><button class="btn btn-cancel" data-action="ver" data-tipo="${tipo}" data-index="${index}">Ver</button><button class="btn btn-cancel" data-action="editar" data-tipo="${tipo}" data-index="${index}">Editar</button><button class="btn btn-cancel" data-action="excluir" data-tipo="${tipo}" data-index="${index}">Excluir</button></div>`;}
 function atualizarCadernetaDigital(){
-  try{const criancas=lerRegistros(CHAVES.criancas),consultas=lerRegistros(CHAVES.consultas),educadores=lerRegistros(CHAVES.educadores);
+  try{const criancas=lerRegistros(CHAVES.criancas),consultas=lerRegistros(CHAVES.consultas);
     $('listaCriancasCadastradas').innerHTML=criancas.length?criancas.map((c,i)=>`<article class="child-row"><div><h3>${escapeHTML(c.nome)}</h3><p>Nascimento: ${escapeHTML(c.nascimento)} · Responsável: ${escapeHTML(c.responsavel)}</p></div>${botoesRegistro('criancas',i)}</article>`).join(''):'<p>Nenhuma criança cadastrada. Use “Novo registro” para começar.</p>';
-    $('listaAtendimentos').innerHTML=[...consultas.map((c,i)=>`<article class="child-row"><div><span class="tag">Consulta</span><h3>${escapeHTML(c.nome)}</h3><p>${escapeHTML(c.data)} · ${escapeHTML(c.profissional||'Profissional não informado')}</p></div>${botoesRegistro('consultas',i)}</article>`),...educadores.map((c,i)=>`<article class="child-row"><div><span class="tag">Educador</span><h3>${escapeHTML(c.edNome)}</h3><p>${escapeHTML(c.edData)} · ${escapeHTML(c.edResponsavel)}</p>${['Não','Faltam vacinas para a idade'].includes(c.edVacinacao)?'<span class="vaccination-badge">⚠ Vacinação pendente</span>':''}</div>${botoesRegistro('educadores',i)}</article>`)].join('')||'<p>Nenhum atendimento registrado.</p>';
+    $('listaAtendimentos').innerHTML=consultas.map((c,i)=>`<article class="child-row"><div><span class="tag">Consulta</span><h3>${escapeHTML(c.nome)}</h3><p>${escapeHTML(c.data)} · ${escapeHTML(c.profissional||'Profissional não informado')}</p></div>${botoesRegistro('consultas',i)}</article>`).join('')||'<p>Nenhum atendimento registrado.</p>';
     atualizarSelecaoCriancas();
   }catch{}
 }
-const rotulos={nome:'Criança',nascimento:'Data de nascimento',responsavel:'Responsável',profissional:'Profissional',data:'Data da consulta',retorno:'Retorno',queixa:'Queixa principal',exame:'Exame físico e antropometria',diagnostico:'Diagnóstico de enfermagem',intervencoes:'Intervenções',orientacoes:'Orientações',edNome:'Criança',edNascimento:'Nascimento',edTurma:'Turma',edResponsavel:'Educador',edData:'Data do preenchimento',edEscola:'Escola/creche',edVacinacao:'Vacinação',edVacinasFaltantes:'Vacinas pendentes',edConsultas:'Consultas de puericultura',edDesenvolvimento:'Observações de desenvolvimento',edSinais:'Sinais gerais',edObservacoes:'Observações',edEncaminhamentos:'Próximos passos'};
+const rotulos={nome:'Criança',nascimento:'Data de nascimento',responsavel:'Responsável',profissional:'Profissional',data:'Data da consulta',retorno:'Retorno',queixa:'Queixa principal',exame:'Exame físico e antropometria',diagnostico:'Diagnóstico de enfermagem',intervencoes:'Intervenções',orientacoes:'Orientações',edNome:'Criança',edNascimento:'Nascimento',edTurma:'Turma',edResponsavel:'Educador',edData:'Data do preenchimento',edEscola:'Escola/creche',edCoordenacaoEmail:'E-mail da coordenação',edVacinacao:'Vacinação',edVacinasFaltantes:'Vacinas pendentes',edConsultas:'Consultas de puericultura',edDesenvolvimento:'Observações de desenvolvimento',edSinais:'Sinais gerais',edObservacoes:'Observações',edEncaminhamentos:'Próximos passos'};
 function detalhesRegistro(item){return `<dl class="record-details">${Object.entries(rotulos).filter(([k])=>Object.hasOwn(item,k)).map(([k,label])=>`<dt>${label}</dt><dd>${escapeHTML(Array.isArray(item[k])?item[k].join('\n'):item[k]||'Não informado')}</dd>`).join('')}</dl>`;}
 rotulos.protocolo='Tipo de protocolo';
 document.querySelector('#view-caderneta').addEventListener('click',async event=>{
@@ -171,7 +206,7 @@ $('fecharRegistro').addEventListener('click',()=>$('registroDialog').close());
 $('imprimirRegistro').addEventListener('click',()=>{const html=$('registroDetalhes').innerHTML;$('registroDialog').close();imprimirHTML(`<article class="print-page"><h1>Mundo da Puericultura</h1>${html}</article>`);});
 $('exportarRegistros').addEventListener('click',()=>{
   if(!exigirAcesso('view-caderneta'))return;
-  try{const data={versao:1,exportadoEm:new Date().toISOString()};for(const [tipo,chave]of Object.entries(CHAVES))data[tipo]=lerRegistros(chave);
+  try{const data={versao:1,exportadoEm:new Date().toISOString()};for(const tipo of ['criancas','consultas'])data[tipo]=lerRegistros(CHAVES[tipo]);
     const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`puericultura-registros-${dataHoje()}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }catch{}
 });
