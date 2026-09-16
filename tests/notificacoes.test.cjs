@@ -8,7 +8,7 @@ test('relatório comum gera mensagem para a coordenação', () => {
     edNome: 'Criança de teste',
     edVacinacao: 'Sim'
   });
-  assert.equal(link.destinatario, 'coordenacao@example.org');
+  assert.equal(link.destinatario, 'coordenacaoesf.urg@gmail.com');
   assert.equal(link.alerta, false);
   assert.match(link.href, /^mailto:/);
   assert.match(decodeURIComponent(link.href), /Relatório do educador/);
@@ -21,6 +21,8 @@ test('vacinação pendente destaca o alerta na mensagem', () => {
   assert.match(mensagem.corpo, /ATENÇÃO/);
 });
 
-test('destinatário inválido não gera link', () => {
-  assert.throws(() => notificacoes.criarLinkEmail({ edCoordenacaoEmail: 'invalido' }), /e-mail válido/);
+test('destinatário antigo ou adulterado não redireciona dados da criança', () => {
+  const link = notificacoes.criarLinkEmail({ edCoordenacaoEmail: 'terceiro@example.org' });
+  assert.equal(link.destinatario, notificacoes.EMAIL_COORDENACAO);
+  assert.doesNotMatch(decodeURIComponent(link.href), /terceiro@example/);
 });

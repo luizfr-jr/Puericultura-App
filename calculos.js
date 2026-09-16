@@ -25,5 +25,12 @@ function calcularConversao({tipo,peso,dose,concentracao,tomadas,maxDose=null,max
   return {mg,dia,ml};
 }
 
-if (typeof module !== "undefined") module.exports = { dataHoje, idadeMeses, calcularConversao };
+function calcularConcentracao(quantidadeMg, volumeMl) {
+  if (![quantidadeMg, volumeMl].every(n => Number.isFinite(n) && n > 0)) throw Error('Informe quantidade em mg e volume em mL positivos.');
+  const concentracao = quantidadeMg / volumeMl;
+  if (!Number.isFinite(concentracao) || concentracao <= 0) throw Error('Concentração inválida. Confira a apresentação.');
+  return concentracao;
+}
+
+if (typeof module !== "undefined") module.exports = { dataHoje, idadeMeses, calcularConversao, calcularConcentracao };
 

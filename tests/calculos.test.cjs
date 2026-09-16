@@ -1,6 +1,6 @@
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
-const {idadeMeses,calcularConversao} = require('../calculos.js');
+const {idadeMeses,calcularConversao,calcularConcentracao} = require('../calculos.js');
 test('idade considera o dia do aniversário mensal',()=>{
   assert.equal(idadeMeses('2025-09-12','2026-09-11'),11);
   assert.equal(idadeMeses('2025-09-12','2026-09-12'),12);
@@ -12,6 +12,15 @@ test('datas futuras, ausentes e impossíveis são rejeitadas',()=>{
   assert.equal(idadeMeses('','2026-09-11'),null);
 });
 const base={tipo:'mg/kg/dia',peso:10,dose:30,concentracao:50,tomadas:3};
+test('apresentação em mg por 5 mL é normalizada antes do cálculo', () => {
+  const concentracao = calcularConcentracao(250, 5);
+  assert.equal(concentracao, 50);
+  assert.equal(calcularConversao({...base, concentracao}).ml, 2);
+  for (const n of [0, -1, NaN, Infinity]) {
+    assert.throws(() => calcularConcentracao(n, 5));
+    assert.throws(() => calcularConcentracao(250, n));
+  }
+});
 test('data de referência inválida não produz idade incorreta',()=>{
   for(const referencia of ['',null,'2026-02-30','2026-13-01','2026-9-12'])
     assert.equal(idadeMeses('2025-01-01',referencia),null);

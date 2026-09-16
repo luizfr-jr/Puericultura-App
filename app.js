@@ -90,17 +90,19 @@ $('formEducador').addEventListener('submit',async event=>{
   if(!exigirAcesso('view-educador')){event.preventDefault();return;}
   event.preventDefault();atualizarEducador();if(!$('formEducador').reportValidity())return;
   const fd=new FormData(event.currentTarget);const item=Object.fromEntries(fd);
+  item.edCoordenacaoEmail=window.PuericulturaNotificacoes.EMAIL_COORDENACAO;
   for(const name of ['edDesenvolvimento','edSinais','edEncaminhamentos'])item[name]=fd.getAll(name);
   item.id=item.edId||crypto.randomUUID();item.edId=item.id;
   try {const registros=lerRegistros(CHAVES.educadores);const i=registros.findIndex(r=>r.id===item.id);if(i<0)registros.push(item);else registros[i]=item;
     if(await salvarRegistros(CHAVES.educadores,registros)){
       const email=window.PuericulturaNotificacoes.criarLinkEmail(item);
       $('edId').value=item.id;$('edEmailLink').href=email.href;$('edNotificacao').hidden=false;
+      window.prepararNotificacaoEducador(item);
       $('edNotificacao').classList.toggle('warning',email.alerta);
       mostrarAviso(email.alerta?'Formulário salvo. O alerta vacinal está pronto para a coordenação.':'Formulário salvo. O relatório está pronto para a coordenação.');
       atualizarRelatoriosEducador();
     }}
-  catch{}
+  catch{mostrarAviso('Não foi possível preparar a notificação. Confira o relatório salvo e tente novamente.','error');}
 });
 
 function atualizarRelatoriosEducador(){
@@ -119,10 +121,16 @@ $('listaRelatoriosEducador').addEventListener('click',async event=>{
   const botao=event.target.closest('[data-educador-action]');if(!botao)return;
   const registros=lerRegistros(CHAVES.educadores),i=Number(botao.dataset.index),item=registros[i];if(!item)return;
   if(botao.dataset.educadorAction==='email'){
-    try{location.href=window.PuericulturaNotificacoes.criarLinkEmail(item).href;}catch(e){mostrarAviso(e.message,'error');}
+    try{
+      const email=window.PuericulturaNotificacoes.criarLinkEmail(item);
+      $('edEmailLink').href=email.href;$('edEmailLink').hidden=false;
+      $('edNotificacao').hidden=false;$('edNotificacao').classList.toggle('warning',email.alerta);
+      await window.prepararNotificacaoEducador(item);
+      $('edNotificacao').scrollIntoView({behavior:'smooth',block:'center'});
+    }catch(e){mostrarAviso(e.message,'error');}
   }
   if(botao.dataset.educadorAction==='editar'){
-    $('formEducador').reset();setTimeout(()=>{for(const el of $('formEducador').elements){if(!el.name)continue;const value=item[el.name];if(el.type==='checkbox')el.checked=Array.isArray(value)&&value.includes(el.value);else el.value=value||'';}$('edId').value=item.id;atualizarEducador();window.scrollTo({top:0,behavior:'smooth'});},0);
+    $('formEducador').reset();setTimeout(()=>{for(const el of $('formEducador').elements){if(!el.name)continue;const value=item[el.name];if(el.type==='checkbox')el.checked=Array.isArray(value)&&value.includes(el.value);else el.value=el.name==='edCoordenacaoEmail'?window.PuericulturaNotificacoes.EMAIL_COORDENACAO:(value||'');}$('edId').value=item.id;atualizarEducador();window.scrollTo({top:0,behavior:'smooth'});},0);
   }
   if(botao.dataset.educadorAction==='excluir'){
     if(!confirm('Excluir este relatório? Essa ação não pode ser desfeita.'))return;
@@ -192,7 +200,7 @@ document.querySelector('#view-caderneta').addEventListener('click',async event=>
     if(b.dataset.action==='editar'){
       if(b.dataset.tipo==='criancas'){$('cadastroCrianca').hidden=false;for(const [field,key]of Object.entries({criancaId:'id',criancaNome:'nome',criancaNascimento:'nascimento',criancaResponsavel:'responsavel',criancaProfissional:'profissional'}))$(field).value=item[key]||'';$('criancaNome').focus();}
       if(b.dataset.tipo==='educadores'){
-        $('formEducador').reset();setTimeout(()=>{for(const el of $('formEducador').elements){if(!el.name)continue;const value=item[el.name];if(el.type==='checkbox')el.checked=Array.isArray(value)&&value.includes(el.value);else el.value=value||'';}$('edId').value=item.id;atualizarEducador();},0);
+        $('formEducador').reset();setTimeout(()=>{for(const el of $('formEducador').elements){if(!el.name)continue;const value=item[el.name];if(el.type==='checkbox')el.checked=Array.isArray(value)&&value.includes(el.value);else el.value=el.name==='edCoordenacaoEmail'?window.PuericulturaNotificacoes.EMAIL_COORDENACAO:(value||'');}$('edId').value=item.id;atualizarEducador();},0);
         document.querySelector('[data-aba="formulario"]').click();navegar('view-educador');
       }
       if(b.dataset.tipo==='consultas'){

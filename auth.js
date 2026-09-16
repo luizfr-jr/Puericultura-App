@@ -89,6 +89,11 @@
       await sdkDb.setDoc(sdkDb.doc(db,'perfis',user.uid),{nome,email:user.email,perfil,coren:perfil==='enfermeiro'?coren:'',criadoEm:sdkDb.serverTimestamp()});
       await carregar(user);
     },
+    async tokenNotificacao() {
+      await pronto;
+      if (!usuario || usuario.perfil !== 'educador' || auth.currentUser?.uid !== usuario.uid) throw falha('Entre com sua conta de educador.');
+      return auth.currentUser.getIdToken();
+    },
     async recuperar(email) { await pronto; try {await sdkAuth.sendPasswordResetEmail(auth,email);} catch(e) {if(e.code!=='auth/user-not-found')throw e;} },
     async sair() { await pronto; await sdkAuth.signOut(auth); erro='';limpar(); },
     ler(tipo) {

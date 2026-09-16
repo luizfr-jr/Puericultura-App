@@ -1,5 +1,6 @@
 (function (root) {
   'use strict';
+  const EMAIL_COORDENACAO = 'coordenacaoesf.urg@gmail.com';
 
   const pendenciaVacinal = valor => ['Não', 'Faltam vacinas para a idade'].includes(valor);
   const linha = (rotulo, valor) => `${rotulo}: ${Array.isArray(valor) ? valor.join('; ') : (valor || 'Não informado')}`;
@@ -32,7 +33,7 @@
   }
 
   function criarLinkEmail(registro) {
-    const destinatario = String(registro.edCoordenacaoEmail || '').trim();
+    const destinatario = EMAIL_COORDENACAO;
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(destinatario)) throw new Error('Informe um e-mail válido da coordenação.');
     const mensagem = criarMensagem(registro);
     return {
@@ -42,7 +43,7 @@
     };
   }
 
-  const api = Object.freeze({ pendenciaVacinal, criarMensagem, criarLinkEmail });
+  const api = Object.freeze({ EMAIL_COORDENACAO, pendenciaVacinal, criarMensagem, criarLinkEmail });
   if (typeof module !== 'undefined') module.exports = api;
   else root.PuericulturaNotificacoes = api;
 })(typeof window !== 'undefined' ? window : this);
