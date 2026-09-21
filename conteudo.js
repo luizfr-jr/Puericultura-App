@@ -33,6 +33,7 @@ window.PUERICULTURA_CONTEUDO = {
     ]
   },
   sinais: ['Marcas, manchas ou lesões sem explicação compatível.', 'Assaduras graves/recorrentes ou higiene frequentemente inadequada.', 'Preocupação com ganho de peso ou crescimento — solicitar avaliação pelas curvas, sem comparar com colegas.', 'Perda de habilidades já adquiridas (regressão).'],
+  unidadesSaude: ['ESF 01 – RUI RAMOS/IPIRANGA', 'ESF 02 – MASCARENHAS DE MORAES', 'ESF 03 – CIDADE NOVA', 'ESF 04 – COHAB I', 'ESF 05 – TARRAGÓ/BELA VISTA', 'ESF 06 – SÃO JOÃO', 'ESF 07 – UNIÃO DAS VILAS', 'ESF 09 – BARRAGEM SANCHURI', 'ESF 10 – SÃO MARCOS', 'UBS 11 – JOÃO ARREGUI', 'UBS 12 – PLANO ALTO', 'ESF 14 – TABAJARA BRITES', 'ESF 15 – HÍPICA', 'ESF 16 – CIDADE ALEGRIA', 'ESF 17 – NOVA ESPERANÇA', 'ESF 18 – PROFILURB', 'ESF 19 – JOÃO PAULO II', 'ESF 20 – CAIC', 'ESF 21 – CENTRO', 'ESF 22 – CABO LUIZ QUEVEDO'],
   encaminhamentos: ['Orientar a família sobre vacinação e agendamento de puericultura.', 'Agendar diálogo com os responsáveis para alinhar rotina e observações.', 'Encaminhar à coordenação/equipe pedagógica.', 'Articular atendimento com a UBS/ESF de referência.'],
   observacao: ['Hematomas recorrentes', 'Queimaduras', 'Higiene inadequada', 'Roupa inadequada ao clima', 'Criança muito assustada', 'Evita contato físico', 'Choro persistente', 'Fome intensa diariamente', 'Preocupação com o desenvolvimento', 'Lesões incompatíveis com o relato', 'Faltas frequentes', 'Mudança brusca de comportamento'],
   documentos: [

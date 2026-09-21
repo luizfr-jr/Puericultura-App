@@ -14,6 +14,15 @@ test('relatório comum gera mensagem para a coordenação', () => {
   assert.match(decodeURIComponent(link.href), /Relatório do educador/);
 });
 
+test('unidade de saúde consta no relatório enviado', () => {
+  const mensagem = notificacoes.criarMensagem({
+    edNome: 'Criança de teste',
+    edVacinacao: 'Sim',
+    edUnidadeSaude: 'ESF 21 – CENTRO'
+  });
+  assert.match(mensagem.corpo, /ESF\/UBS de referência: ESF 21 – CENTRO/);
+});
+
 test('vacinação pendente destaca o alerta na mensagem', () => {
   const mensagem = notificacoes.criarMensagem({ edNome: 'Criança de teste', edVacinacao: 'Faltam vacinas para a idade' });
   assert.equal(mensagem.alerta, true);

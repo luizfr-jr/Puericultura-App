@@ -43,7 +43,7 @@ Os registros antigos em `localStorage` permanecem preservados, mas não são exi
 - Início público, login por e-mail/senha e ferramentas vinculadas ao perfil cadastrado.
 - Dez períodos de consulta, da primeira semana aos três anos, com orientações próprias.
 - Guia de amamentação, educação familiar, vídeos e notícias indicadas.
-- Formulário exclusivo do educador com idade em meses completos, vacinação, desenvolvimento, sinais, observações e encaminhamentos; histórico próprio e preparação de relatório por e-mail para a coordenação. Pendências vacinais são destacadas no assunto e no corpo da mensagem.
+- Formulário exclusivo do educador com idade em meses completos, ESF/UBS de referência, vacinação, desenvolvimento, sinais, observações e encaminhamentos; histórico próprio e preparação de relatório por e-mail para a coordenação. Pendências vacinais são destacadas no assunto e no corpo da mensagem.
 - Cadastro de crianças, consultas completas, visualização, edição, exclusão e exportação. A exclusão de criança com consultas vinculadas é impedida.
 - Imagens próprias nos seis módulos da página inicial, miniaturas nos vídeos e notícias em cartões ilustrados, conforme a apresentação da reunião de 13/09/2026.
 - Documentos de enfermagem com links e indicação de norma revogada/alterada.
@@ -52,7 +52,7 @@ Os registros antigos em `localStorage` permanecem preservados, mas não são exi
 ## Pendências para finalizar a revisão clínica
 
 1. **Base de medicamentos:** o exemplo fornecido importa `MEDICAMENTOS` e `CATEGORIAS`, mas não contém esses dados. É necessária a tabela aprovada pelo serviço: indicação, faixa etária, dose, intervalo, apresentação, concentração, máximos, contraindicações, duração e referência. A calculadora atual faz conversão matemática; não recomenda tratamentos nem presume doses. Não converte gotas, UI ou comprimidos. O texto final deve ser conferido pelo prescritor.
-2. **Instrumento de observação:** o material não identifica validação dos cortes numéricos de risco. O questionário registra observações sem classificar risco. O fluxo orienta encaminhar suspeitas à rede de proteção independentemente da contagem.
+2. **Instrumento de observação:** o material não identifica validação dos cortes numéricos de risco. O retorno diferencia respostas incompletas, sinais presentes, itens não observados e ausência de sinais, sem criar uma classificação clínica. O fluxo orienta encaminhar suspeitas à rede de proteção independentemente da contagem.
 3. **Documentos:** a Resolução COFEN 159/1993 está revogada; a 737/2024 trata de parto domiciliar planejado e foi alterada pela 786/2025. Essas condições estão identificadas. A referência específica ao Parecer COREN-RS 022/2023 permanece pendente de confirmação do documento correto.
 4. **Conteúdo clínico:** as orientações novas foram resumidas com apoio de fontes oficiais. A conferência integral dos textos/imagens fornecidos e dos módulos anteriores, incluindo calendário vacinal e condutas neonatais, exige revisão pelo responsável clínico antes da publicação.
 

@@ -58,6 +58,7 @@ window.addEventListener('conta-alterada',()=>{
   $('listaCriancasCadastradas').innerHTML='';$('listaAtendimentos').innerHTML='';$('listaRelatoriosEducador').innerHTML='<p>Nenhum relatório salvo.</p>';
   $('edNotificacao').hidden=true;$('edEmailLink').href='#';
   $('observacaoResumo').textContent='Nenhuma observação preenchida.';
+  $('observacaoResumo').classList.remove('warning','success');
   const atual=[...document.querySelectorAll('.page-view')].find(el=>el.style.display==='flex');
   if(atual&&!PuericulturaPermissoes.podeAcessar(atual.id,window.Conta.usuario?.perfil))navegar('view-dashboard');
   atualizarSelecaoCriancas();
@@ -111,7 +112,7 @@ function atualizarRelatoriosEducador(){
     const registros=lerRegistros(CHAVES.educadores);
     $('listaRelatoriosEducador').innerHTML=registros.length?registros.map((item,i)=>{
       const alerta=window.PuericulturaNotificacoes.pendenciaVacinal(item.edVacinacao);
-      return `<article class="child-row"><div><span class="tag">Relatório do educador</span><h3>${escapeHTML(item.edNome)}</h3><p>${escapeHTML(item.edData)} · ${escapeHTML(item.edEscola||'Escola não informada')}</p>${alerta?'<span class="vaccination-badge">⚠ Vacinação pendente</span>':''}</div><div class="child-actions"><button class="btn btn-cancel" data-educador-action="email" data-index="${i}">E-mail</button><button class="btn btn-cancel" data-educador-action="editar" data-index="${i}">Editar</button><button class="btn btn-cancel" data-educador-action="excluir" data-index="${i}">Excluir</button></div></article>`;
+      return `<article class="child-row"><div><span class="tag">Relatório do educador</span><h3>${escapeHTML(item.edNome)}</h3><p>${escapeHTML(item.edData)} · ${escapeHTML(item.edEscola||'Escola não informada')}</p><p>${escapeHTML(item.edUnidadeSaude||'ESF/UBS não informada')}</p>${alerta?'<span class="vaccination-badge">⚠ Vacinação pendente</span>':''}</div><div class="child-actions"><button class="btn btn-cancel" data-educador-action="email" data-index="${i}">E-mail</button><button class="btn btn-cancel" data-educador-action="editar" data-index="${i}">Editar</button><button class="btn btn-cancel" data-educador-action="excluir" data-index="${i}">Excluir</button></div></article>`;
     }).join(''):'<p>Nenhum relatório salvo.</p>';
   }catch{}
 }
@@ -138,8 +139,11 @@ $('listaRelatoriosEducador').addEventListener('click',async event=>{
   }
 });
 $('formObservacao').addEventListener('change',()=>{
-  const values=[...new FormData($('formObservacao')).values()];const sim=values.filter(v=>v==='Sim').length;const preenchidos=values.filter(Boolean).length;
-  $('observacaoResumo').textContent=`${preenchidos} de ${values.length} itens preenchidos; ${sim} observação(ões) presente(s). Este total não classifica risco. Siga o fluxo da rede de proteção.`;
+  const values=[...new FormData($('formObservacao')).values()];
+  const avaliacao=window.PuericulturaAvaliacaoRisco.avaliarObservacao(values,window.PUERICULTURA_CONTEUDO.observacao.length);
+  $('observacaoResumo').textContent=avaliacao.mensagem;
+  $('observacaoResumo').classList.toggle('warning',['atencao','indeterminado'].includes(avaliacao.estado));
+  $('observacaoResumo').classList.toggle('success',avaliacao.estado==='sem-sinais-observados');
 });
 function imprimirHTML(html){$('print-root').innerHTML=html;document.body.classList.add('printing');window.print();}
 window.addEventListener('afterprint',()=>document.body.classList.remove('printing'));
@@ -184,7 +188,7 @@ function atualizarCadernetaDigital(){
     atualizarSelecaoCriancas();
   }catch{}
 }
-const rotulos={nome:'Criança',nascimento:'Data de nascimento',responsavel:'Responsável',profissional:'Profissional',data:'Data da consulta',retorno:'Retorno',queixa:'Queixa principal',exame:'Exame físico e antropometria',diagnostico:'Diagnóstico de enfermagem',intervencoes:'Intervenções',orientacoes:'Orientações',edNome:'Criança',edNascimento:'Nascimento',edTurma:'Turma',edResponsavel:'Educador',edData:'Data do preenchimento',edEscola:'Escola/creche',edCoordenacaoEmail:'E-mail da coordenação',edVacinacao:'Vacinação',edVacinasFaltantes:'Vacinas pendentes',edConsultas:'Consultas de puericultura',edDesenvolvimento:'Observações de desenvolvimento',edSinais:'Sinais gerais',edObservacoes:'Observações',edEncaminhamentos:'Próximos passos'};
+const rotulos={nome:'Criança',nascimento:'Data de nascimento',responsavel:'Responsável',profissional:'Profissional',data:'Data da consulta',retorno:'Retorno',queixa:'Queixa principal',exame:'Exame físico e antropometria',diagnostico:'Diagnóstico de enfermagem',intervencoes:'Intervenções',orientacoes:'Orientações',edNome:'Criança',edNascimento:'Nascimento',edTurma:'Turma',edResponsavel:'Educador',edData:'Data do preenchimento',edEscola:'Escola/creche',edUnidadeSaude:'ESF/UBS de referência',edCoordenacaoEmail:'E-mail da coordenação',edVacinacao:'Vacinação',edVacinasFaltantes:'Vacinas pendentes',edConsultas:'Consultas de puericultura',edDesenvolvimento:'Observações de desenvolvimento',edSinais:'Sinais gerais',edObservacoes:'Observações',edEncaminhamentos:'Próximos passos'};
 function detalhesRegistro(item){return `<dl class="record-details">${Object.entries(rotulos).filter(([k])=>Object.hasOwn(item,k)).map(([k,label])=>`<dt>${label}</dt><dd>${escapeHTML(Array.isArray(item[k])?item[k].join('\n'):item[k]||'Não informado')}</dd>`).join('')}</dl>`;}
 rotulos.protocolo='Tipo de protocolo';
 document.querySelector('#view-caderneta').addEventListener('click',async event=>{

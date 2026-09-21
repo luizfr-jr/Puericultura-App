@@ -17,6 +17,7 @@
       linha('Data de nascimento', registro.edNascimento),
       linha('Turma', registro.edTurma),
       linha('Escola/creche', registro.edEscola),
+      linha('ESF/UBS de referência', registro.edUnidadeSaude),
       linha('Educador responsável', registro.edResponsavel),
       linha('Data do preenchimento', registro.edData),
       '',
