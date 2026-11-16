@@ -3,7 +3,7 @@
   const paginas = Object.freeze({
     'view-dashboard': [], 'view-crescimento': [], 'view-neonatais': [],
     'view-imunizacao': [], 'view-consultas': [], 'view-amamentacao': [],
-    'view-educacao': [], 'view-noticias': [], 'view-login': [],
+    'view-educacao': [], 'view-promocao': [], 'view-noticias': [], 'view-login': [],
     'view-educador': ['educador'],
     'view-documentos': ['enfermeiro'],
     'view-nova-consulta': ['enfermeiro'],

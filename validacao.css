@@ -1,0 +1,107 @@
+/* Revisão pós-validação (nov/2026): design centrado nas pessoas usuárias. */
+
+/* Foco visível para navegação por teclado */
+:focus-visible { outline: 3px solid #be123c; outline-offset: 2px; border-radius: 6px; }
+
+/* Botões que parecem links (atalhos) */
+.link-inline { background: none; border: 0; padding: 4px 0; color: #be123c; font: inherit; font-weight: 600; text-align: left; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.link-inline:hover { color: #9f1239; }
+
+/* Início: propósito e entrada por idade */
+.header-title-box h1 { font-size: clamp(22px, 4vw, 30px); }
+.header-title-box p { max-width: 62ch; line-height: 1.5; }
+.inicio-rapido { background: #fff; border: 1px solid var(--border-color); border-radius: 20px; padding: 20px; margin-bottom: 18px; }
+.inicio-rapido h2 { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+.inicio-rapido p { color: var(--text-muted); font-size: 14px; margin-bottom: 14px; }
+.idade-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.idade-chip { min-height: 44px; padding: 8px 16px; border-radius: 999px; border: 1px solid #fecdd3; background: #fff1f2; color: #9f1239; font-weight: 700; font-size: 14px; cursor: pointer; }
+.idade-chip:hover { background: #ffe4e6; border-color: #fda4af; }
+
+.perfis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
+.perfil-card { background: #fff; border: 1px solid var(--border-color); border-radius: 18px; padding: 18px; }
+.perfil-card h3 { font-size: 15px; font-weight: 800; margin-bottom: 8px; }
+.perfil-card ul { list-style: none; display: grid; gap: 2px; }
+.perfil-card .link-inline { font-size: 14px; min-height: 36px; }
+
+/* Cartões de módulos: menos rolagem em telas pequenas */
+.puericultura-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.puericultura-item:hover { transform: translateY(-3px); }
+.puericultura-item:hover .puericultura-item-img img { transform: none; }
+.modulo-teoria .puericultura-item-img svg { width: 72px; height: 72px; fill: none; stroke: #be123c; stroke-width: 3; stroke-linecap: round; }
+.rodape-validacao { margin-top: 18px; padding: 14px 4px; font-size: 12px; color: var(--text-muted); line-height: 1.5; border-top: 1px solid var(--border-color); }
+
+/* Menu */
+.nav-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: .45; margin: 0 4px 0 6px; flex-shrink: 0; }
+
+/* Calendário vacinal */
+.vacina-linha { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin: 14px 0; }
+.vacina-linha > li { border: 1px solid var(--border-color); border-left: 4px solid #8b5cf6; border-radius: 12px; padding: 12px 14px; background: #fff; }
+.vacina-linha h3 { font-size: 15px; font-weight: 800; color: #5b21b6; margin-bottom: 6px; }
+.vacina-linha ul { list-style: none; display: grid; gap: 6px; }
+.vacina-linha li li { display: flex; flex-direction: column; font-size: 14px; line-height: 1.35; }
+.vacina-linha li li span { color: var(--text-muted); font-size: 13px; }
+
+/* Triagem neonatal */
+.triagem-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; margin-top: 12px; }
+.triagem-card { border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; background: #fff; }
+.triagem-card h3 { font-size: 15px; font-weight: 800; margin-bottom: 6px; }
+.triagem-card p { font-size: 14px; line-height: 1.45; color: #334155; }
+.triagem-card .prazo { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-color); }
+.triagem-card .prazo span { font-weight: 700; color: #be123c; }
+
+/* Pender e Processo de Enfermagem */
+.pender-fluxo { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 12px; counter-reset: none; }
+.pender-fluxo > li { position: relative; border: 1px solid var(--border-color); border-top: 4px solid #f43f5e; border-radius: 12px; padding: 14px; background: #fff; }
+.pender-fluxo > li:not(:last-child)::after { content: "→"; position: absolute; right: -14px; top: 40%; color: #be123c; font-weight: 800; }
+.pender-fluxo h3 { font-size: 15px; font-weight: 800; margin-bottom: 8px; }
+.pe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 12px; }
+.pe-grid article { border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; background: #fff; }
+.pe-grid h3 { font-size: 14px; font-weight: 800; margin-bottom: 6px; color: #0f766e; }
+.pe-grid p { font-size: 14px; line-height: 1.45; color: #334155; }
+.tabela-rolagem { overflow-x: auto; margin-top: 12px; }
+.dx-tabela { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 560px; }
+.dx-tabela th, .dx-tabela td { border: 1px solid var(--border-color); padding: 10px; text-align: left; vertical-align: top; line-height: 1.4; }
+.dx-tabela thead th { background: #f8fafc; font-weight: 800; }
+.dx-tabela tbody th { font-weight: 700; }
+
+/* Detalhe da consulta */
+.consulta-extra { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.consulta-extra > section { border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; background: #fff; }
+.consulta-extra h3 { font-size: 15px; font-weight: 800; margin-bottom: 8px; }
+.vacina-mini { list-style: none; display: grid; gap: 6px; font-size: 14px; line-height: 1.4; margin-bottom: 6px; }
+.pender-box { border-left: 4px solid #f43f5e !important; }
+.pender-box p, .pender-box dd { font-size: 14px; line-height: 1.45; }
+.pender-box dl { margin: 8px 0; }
+.pender-box dt { font-weight: 700; font-size: 13px; color: #9f1239; margin-top: 6px; }
+
+@media (max-width: 900px) {
+  .perfis, .pender-fluxo, .consulta-extra { grid-template-columns: 1fr; }
+  .pender-fluxo > li:not(:last-child)::after { content: "↓"; right: 50%; top: auto; bottom: -18px; }
+  .pender-fluxo { gap: 22px; }
+  .module-grid { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 700px) {
+  .puericultura-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .puericultura-item { border-radius: 14px; }
+  .puericultura-item-img { height: 96px; }
+  .puericultura-item-img img { width: 100%; height: 100%; object-fit: cover; }
+  .puericultura-item-info { padding: 10px 12px 12px; }
+  .puericultura-item-info h3 { font-size: 14px; margin-bottom: 4px; }
+  .puericultura-item-info p { font-size: 12px; }
+  .inicio-rapido, .perfil-card { padding: 16px; }
+  .idade-chip { padding: 8px 14px; font-size: 13px; }
+}
+
+/* Tabela de diagnósticos em formato de cartões no celular */
+@media (max-width: 700px) {
+  .dx-tabela { min-width: 0; }
+  .dx-tabela thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .dx-tabela, .dx-tabela tbody, .dx-tabela tr, .dx-tabela th, .dx-tabela td { display: block; width: 100%; }
+  .dx-tabela tr { border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+  .dx-tabela th, .dx-tabela td { border: 0; border-top: 1px solid var(--border-color); }
+  .dx-tabela tbody th { border-top: 0; background: #fff1f2; color: #9f1239; }
+  .dx-tabela td::before { display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 2px; }
+  .dx-tabela td:nth-of-type(1)::before { content: "Exemplos de enunciados"; }
+  .dx-tabela td:nth-of-type(2)::before { content: "Intervenções de promoção da saúde"; }
+}
