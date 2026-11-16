@@ -208,24 +208,21 @@
       <h2 id="inicioIdadeTitulo">Qual a idade da criança?</h2>
       <p>Abra o roteiro da consulta com exame, desenvolvimento, orientações, vacinas e promoção da saúde.</p>
       <div class="idade-chips">${dados.consultas.map(([label], i) => `<button type="button" class="idade-chip" data-abrir-periodo="${i}">${esc(label)}</button>`).join('')}</div>
-    </section>
-    <section class="perfis" aria-label="Atalhos por perfil">
-      <article class="perfil-card"><h3>Sou profissional de saúde</h3><ul>
-        <li><button type="button" class="link-inline open-view-extra" data-ir="view-consultas">Roteiros de consulta por idade</button></li>
-        <li><button type="button" class="link-inline open-view-extra" data-ir="view-imunizacao">Calendário de vacinação 2026</button></li>
-        <li><button type="button" class="link-inline open-view-extra" data-ir="view-promocao">Nola Pender e diagnósticos de enfermagem</button></li></ul></article>
-      <article class="perfil-card"><h3>Sou educador(a) de creche</h3><ul>
-        <li><button type="button" class="link-inline open-view-extra" data-ir="view-crescimento">Marcos do desenvolvimento</button></li>
-        <li><button type="button" class="link-inline open-view-extra" data-ir="view-educacao">Educação familiar</button></li>
-        <li><button type="button" class="link-inline open-view-extra" data-ir="view-login">Entrar para preencher o formulário</button></li></ul></article>
-      <article class="perfil-card"><h3>Sou mãe, pai ou cuidador(a)</h3><ul>
-        <li><button type="button" class="link-inline open-view-extra" data-ir="view-amamentacao">Guia de amamentação</button></li>
-        <li><button type="button" class="link-inline open-view-extra" data-ir="view-neonatais">Primeiros dias do bebê e testes</button></li>
-        <li><button type="button" class="link-inline" id="atalhoPostos">Encontrar uma unidade de saúde</button></li></ul></article>
     </section>`);
     const secao = dash.querySelector('.modules-section-header');
-    if (secao) secao.innerHTML = '<h2>Todos os módulos</h2><p>Conteúdos revisados após validação por juízes especialistas.</p>';
+    if (secao) secao.innerHTML = '<h2>Módulos</h2><p>Cada módulo indica o público a que se destina.</p>';
     dash.querySelector('.puericultura-grid')?.insertAdjacentHTML('beforeend', `<div class="puericultura-item open-view-extra modulo-teoria" data-ir="view-promocao" role="button" tabindex="0"><div class="puericultura-item-img"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="22" r="10"/><path d="M14 54c2-11 9-17 18-17s16 6 18 17"/><path d="M44 12l8-4M48 22h8M44 32l8 4"/></svg></div><div class="puericultura-item-info"><h3>Promoção da Saúde</h3><p>Nola Pender, Processo de Enfermagem e CIPE/NANDA-I</p></div></div>`);
+    const PUBLICO = {
+      'view-neonatais': ['Profissional', 'Família'], 'view-crescimento': ['Profissional', 'Educador'],
+      'view-imunizacao': ['Profissional', 'Família'], 'view-consultas': ['Profissional'],
+      'view-amamentacao': ['Profissional', 'Família'], 'view-educacao': ['Educador', 'Família'],
+      'view-promocao': ['Profissional']
+    };
+    dash.querySelectorAll('.puericultura-item').forEach(item => {
+      const alvo = item.dataset.target || item.dataset.ir;
+      const tags = PUBLICO[alvo];
+      if (tags) item.querySelector('.puericultura-item-info').insertAdjacentHTML('beforeend', `<p class="publico-tags"><span class="sr-only">Para: </span>${tags.map(t => `<span class="publico-tag">${t}</span>`).join('')}</p>`);
+    });
     dash.insertAdjacentHTML('beforeend', '<footer class="rodape-validacao">Conteúdo revisado em novembro de 2026 a partir da validação por 15 juízes especialistas. As orientações apoiam, mas não substituem, a avaliação profissional e os protocolos do serviço.</footer>');
   }
 
@@ -277,7 +274,6 @@
       $('detalheConsulta')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
-    if (ev.target.closest('#atalhoPostos')) $('btnSidebarPostos')?.click();
   });
 
 })();
