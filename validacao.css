@@ -27,7 +27,9 @@
 .puericultura-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
 .puericultura-item:hover { transform: translateY(-3px); }
 .puericultura-item:hover .puericultura-item-img img { transform: none; }
-.modulo-teoria .puericultura-item-img svg { width: 72px; height: 72px; fill: none; stroke: #be123c; stroke-width: 3; stroke-linecap: round; }
+.modulo-teoria .puericultura-item-img { display: flex; align-items: center; justify-content: center; background: #fff1f2; }
+.modulo-teoria .puericultura-item-img svg { width: 64px; height: 64px; fill: none; stroke: #be123c; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.referencias ul { list-style: none; display: grid; gap: 8px; font-size: 14px; line-height: 1.5; color: #334155; }
 .rodape-validacao { margin-top: 18px; padding: 14px 4px; font-size: 12px; color: var(--text-muted); line-height: 1.5; border-top: 1px solid var(--border-color); }
 
 /* Menu */
@@ -102,8 +104,7 @@
   .dx-tabela th, .dx-tabela td { border: 0; border-top: 1px solid var(--border-color); }
   .dx-tabela tbody th { border-top: 0; background: #fff1f2; color: #9f1239; }
   .dx-tabela td::before { display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 2px; }
-  .dx-tabela td:nth-of-type(1)::before { content: "Exemplos de enunciados"; }
-  .dx-tabela td:nth-of-type(2)::before { content: "Intervenções de promoção da saúde"; }
+  .dx-tabela td::before { content: attr(data-label); }
 }
 
 /* Etiquetas de público nos módulos */

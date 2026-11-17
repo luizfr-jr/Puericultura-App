@@ -39,15 +39,31 @@
 
   // Triagem neonatal (Programa Nacional de Triagem Neonatal).
   const TRIAGENS = [
-    ['Teste do pezinho', 'Triagem biológica de doenças metabólicas, genéticas e infecciosas.', 'Coleta preferencialmente entre o 3º e o 5º dia de vida, na maternidade ou na UBS.'],
-    ['Teste do olhinho', 'Teste do reflexo vermelho, para alterações oculares congênitas.', 'Antes da alta da maternidade e repetido nas consultas de rotina, conforme protocolo.'],
-    ['Teste da orelhinha', 'Triagem auditiva neonatal.', 'Preferencialmente nas primeiras semanas, até o fim do 1º mês de vida.'],
-    ['Teste do coraçãozinho', 'Oximetria de pulso para cardiopatias congênitas críticas.', 'Entre 24 e 48 horas de vida, antes da alta da maternidade.'],
+    ['Teste do pezinho', 'Triagem biológica de doenças metabólicas, genéticas e infecciosas.', 'Após completar 48 horas de vida e até o 5º dia, preferencialmente entre o 3º e o 5º dia.'],
+    ['Teste do coraçãozinho', 'Oximetria de pulso para cardiopatias congênitas críticas.', 'Entre 24 e 48 horas de vida, antes da alta hospitalar.'],
+    ['Teste da orelhinha', 'Triagem auditiva neonatal.', 'Preferencialmente na maternidade, antes da alta; quando não realizado, assegurar a triagem no primeiro mês.'],
+    ['Teste do olhinho', 'Teste do reflexo vermelho, para alterações oculares congênitas.', 'Na maternidade, antes da alta, com acompanhamento na puericultura.'],
     ['Teste da linguinha', 'Avaliação do frênulo lingual (Lei nº 13.002/2014).', 'Na maternidade, antes da alta, por profissional capacitado.']
   ];
 
-  // Modelo de Promoção da Saúde (Nola Pender) aplicado a cada consulta.
-  // [comportamento de saúde a promover, pergunta sobre benefícios, barreira frequente]
+  // Calendário mínimo de consultas de puericultura (Ministério da Saúde).
+  const ACOMPANHAMENTO = [
+    ['Recém-nascido', 'Nascimento até 27 dias completos', 'Primeira consulta na <strong>primeira semana de vida</strong>, além dos retornos necessários.'],
+    ['Primeiro semestre', '1 a 5 meses', 'Consultas aos <strong>1, 2 e 4 meses</strong>.'],
+    ['Segundo semestre', '6 a 11 meses', 'Consultas aos <strong>6 e 9 meses</strong>.'],
+    ['Segundo ano de vida', '12 a 23 meses', 'Consultas aos <strong>12 e 18 meses</strong>.'],
+    ['A partir dos 2 anos', '24 meses', 'Consulta aos <strong>24 meses</strong>, seguida de acompanhamento, no mínimo, anual.']
+  ];
+
+  // Modelo de Promoção da Saúde (Nola Pender): o modelo não define comportamentos fixos por idade.
+  // Aplicação proposta pela equipe por faixa etária (revisão clínica de nov/2026).
+  const FAIXAS_PENDER = [
+    ['Recém-nascido e lactente', 'Trabalhar a confiança e as dificuldades dos cuidadores para realizar os cuidados e acompanhar a criança.'],
+    ['1–2 anos', 'Pactuar pequenas metas com os cuidadores e favorecer a participação da criança nas rotinas.']
+  ];
+  // Faixa de cada consulta (índice em FAIXAS_PENDER), na ordem de dados.consultas.
+  const FAIXA_CONSULTA = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1];
+  // Exemplos de temas para pactuar em cada consulta (a comparar com a proposta por faixa).
   const PROMOCAO = [
     ['Amamentação exclusiva', 'O que vocês já ouviram sobre os benefícios do leite materno?', 'Dor ao amamentar, cansaço e insegurança sobre a quantidade de leite.'],
     ['Amamentação e sono seguro', 'Como a amamentação tem ajudado o bebê e a mãe?', 'Pressão de familiares para oferecer chás, água ou fórmula.'],
@@ -61,15 +77,15 @@
     ['Atividade física, sono e convivência', 'Quais brincadeiras ativas a criança mais gosta?', 'Falta de espaço seguro e adaptação à escola.']
   ];
 
-  // Exemplos de enunciados diagnósticos por situação comum na puericultura.
-  // Rótulos devem ser conferidos na edição vigente da NANDA-I e da CIPE®.
+  // Situações frequentes para o julgamento diagnóstico. Os rótulos não são listados:
+  // devem ser registrados com rótulo exato, código e classificação de origem da edição consultada.
   const DIAGNOSTICOS = [
-    ['Amamentação', 'Amamentação eficaz; Amamentação ineficaz; Amamentação interrompida', 'Observar a mamada, corrigir pega e posição, apoiar a rede familiar e agendar retorno precoce.'],
-    ['Crescimento e nutrição', 'Disposição para nutrição melhorada; Nutrição desequilibrada (risco ou presença)', 'Interpretar as curvas com a família, orientar alimentação adequada à idade e reavaliar a trajetória.'],
-    ['Desenvolvimento', 'Desenvolvimento infantil adequado; Risco de desenvolvimento infantil atrasado', 'Registrar marcos na Caderneta, orientar estímulos e encaminhar quando houver alerta ou provável atraso.'],
-    ['Imunização', 'Esquema vacinal completo; Esquema vacinal atrasado', 'Conferir a caderneta, vacinar no mesmo dia quando possível e combinar a data das próximas doses.'],
-    ['Segurança', 'Risco de lesão; Risco de queda', 'Identificar riscos da casa com a família e definir uma adaptação prioritária.'],
-    ['Família e cuidado', 'Disposição para paternidade ou maternidade melhorada; Tensão do papel de cuidador', 'Reconhecer o que a família já faz bem, fortalecer a rede de apoio e acolher sobrecarga.']
+    ['Amamentação', 'Pega, posição, transferência de leite, dor mamilar, confiança da mãe e apoio da família.', 'Observar a mamada, corrigir pega e posição, apoiar a rede familiar e agendar retorno precoce.'],
+    ['Crescimento e nutrição', 'Trajetória nas curvas de peso, comprimento e IMC; alimentação conforme a idade.', 'Interpretar as curvas com a família, orientar alimentação adequada à idade e reavaliar a trajetória.'],
+    ['Desenvolvimento', 'Marcos da Caderneta da Criança, fatores de risco e preocupações da família.', 'Orientar estímulos, registrar marcos e encaminhar quando houver alerta ou provável atraso.'],
+    ['Imunização', 'Doses registradas na caderneta, atrasos e motivos de atraso.', 'Vacinar no mesmo dia quando possível e combinar a data das próximas doses.'],
+    ['Segurança', 'Riscos do domicílio, transporte e supervisão da criança.', 'Identificar riscos com a família e definir uma adaptação prioritária.'],
+    ['Família e cuidado', 'Rede de apoio, sobrecarga do cuidador e vínculo com a criança.', 'Reconhecer o que a família já faz bem, fortalecer a rede de apoio e acolher sobrecarga.']
   ];
 
   /* ------------------------------------------------------------------ */
@@ -102,6 +118,13 @@
       <h2 id="triagemTitulo">Triagem neonatal: testes e prazos</h2>
       <p>Na primeira consulta, confira na Caderneta da Criança se cada teste foi feito e se o resultado foi entregue. Teste pendente ou alterado deve ser encaminhado sem esperar a próxima consulta.</p>
       <div class="triagem-grid">${TRIAGENS.map(([t, o, q]) => `<article class="triagem-card"><h3>${t}</h3><p>${o}</p><p class="prazo"><span>Quando:</span> ${q}</p></article>`).join('')}</div>
+      <p class="storage-note">Esses prazos orientam a conferência na consulta. Considere situações especiais e o fluxo assistencial do seu município.</p>
+    </section>
+    <section class="module-panel" aria-labelledby="acompTitulo">
+      <h2 id="acompTitulo">Acompanhamento da puericultura em todas as fases</h2>
+      <p>Calendário mínimo de consultas do Ministério da Saúde.</p>
+      <div class="tabela-rolagem" tabindex="0" role="region" aria-label="Calendário mínimo de consultas"><table class="dx-tabela acomp-tabela"><thead><tr><th scope="col">Fase do acompanhamento</th><th scope="col">Idade ou momento</th><th scope="col">Consultas de rotina</th></tr></thead><tbody>${ACOMPANHAMENTO.map(([f, i, c]) => `<tr><th scope="row">${f}</th><td data-label="Idade ou momento">${i}</td><td data-label="Consultas de rotina">${c}</td></tr>`).join('')}</tbody></table></div>
+      <button type="button" class="btn btn-cancel open-view-extra" data-ir="view-consultas">Abrir roteiros por idade</button>
     </section>
     <section class="module-panel" aria-labelledby="vacinaNeoTitulo">
       <h2 id="vacinaNeoTitulo">Vacinas ao nascer</h2>
@@ -109,7 +132,7 @@
       <button type="button" class="btn btn-cancel open-view-extra" data-ir="view-imunizacao">Ver calendário completo</button>
     </section>`;
     if (fonte) fonte.insertAdjacentHTML('beforebegin', bloco); else neo.insertAdjacentHTML('beforeend', bloco);
-    if (fonte) fonte.insertAdjacentHTML('beforeend', ` Triagem neonatal: ${link('https://portaldeboaspraticas.iff.fiocruz.br/atencao-crianca/principais-questoes-sobre-o-papel-da-aps-no-acompanhamento-dos-testes-neonatais', 'Fiocruz · Papel da APS nos testes neonatais')}.`);
+    if (fonte) fonte.insertAdjacentHTML('beforeend', ` Triagem neonatal e acompanhamento: ${link('https://www.gov.br/saude/pt-br/composicao/saes/triagem-neonatal/perguntas-frequentes-faq/quando-deve-ser-realizada-a-coleta-do-teste-do-pezinho', 'Ministério da Saúde · Quando deve ser realizada a coleta do teste do pezinho?')} · ${link('https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/s/saude-da-crianca/cuidado-neonatal/cuidado-neonatal', 'Ministério da Saúde · Cuidado neonatal')} · ${link('https://linhasdecuidado.saude.gov.br/portal/puericultura/unidade-hospitalar/planejamento-terapeutico/', 'Ministério da Saúde · Linhas de cuidado: puericultura')}.`);
   }
 
   /* ------------------------------------------------------------------ */
@@ -117,7 +140,7 @@
   /* ------------------------------------------------------------------ */
   const main = document.querySelector('.main-content');
   const promocao = `<section id="view-promocao" class="page-view inner-view">
-    <button class="btn-voltar open-view" data-target="view-dashboard">← Início</button>
+    <button type="button" class="btn-voltar open-view-extra" data-ir="view-dashboard">← Início</button>
     <header class="module-header-text"><h1 tabindex="-1">Promoção da Saúde e Processo de Enfermagem</h1><p>Fundamentação teórica do portal: Modelo de Promoção da Saúde de Nola Pender, Processo de Enfermagem e linguagens padronizadas (CIPE® e NANDA-I).</p></header>
     <div class="notice success">O portal usa o Modelo de Promoção da Saúde de Nola Pender para orientar a consulta: em vez de apenas prescrever cuidados, o profissional busca entender o que a família pensa, sente e consegue fazer, e combina com ela um plano de ação possível.</div>
 
@@ -130,10 +153,16 @@
       </ol>
     </section>
 
+    <section class="module-panel" aria-labelledby="penderFaixaTitulo">
+      <h2 id="penderFaixaTitulo">Aplicação por faixa etária</h2>
+      <p>O modelo de Pender não estabelece uma lista fixa de comportamentos para cada idade. Ele orienta a avaliação de benefícios percebidos, barreiras, autoeficácia, apoio familiar e compromisso com um plano de ação. Esta é a proposta de aplicação adotada no portal:</p>
+      <div class="tabela-rolagem" tabindex="0" role="region" aria-label="Aplicação do modelo por faixa etária"><table class="dx-tabela faixa-tabela"><thead><tr><th scope="col">Faixa etária</th><th scope="col">Aplicação proposta</th></tr></thead><tbody>${FAIXAS_PENDER.map(([f, t]) => `<tr><th scope="row">${f}</th><td data-label="Aplicação proposta">${t}</td></tr>`).join('')}</tbody></table></div>
+    </section>
+
     <section class="module-panel" aria-labelledby="penderPraticaTitulo">
       <h2 id="penderPraticaTitulo">Como aplicar na consulta de puericultura</h2>
       <ol class="flow-list">
-        <li>Escolha com a família <strong>um comportamento de saúde</strong> para a fase da criança. Cada roteiro em ${'<button type="button" class="link-inline open-view-extra" data-ir="view-consultas">Consultas de Rotina</button>'} traz uma sugestão.</li>
+        <li>Escolha com a família <strong>um comportamento de saúde</strong> para a fase da criança. Cada roteiro em ${'<button type="button" class="link-inline open-view-extra" data-ir="view-consultas">Consultas de Rotina</button>'} traz um exemplo de tema.</li>
         <li>Pergunte sobre <strong>experiências anteriores</strong> e sobre o que a família sabe e pensa do assunto.</li>
         <li>Explore <strong>benefícios e barreiras</strong> com perguntas abertas, sem julgamento.</li>
         <li>Avalie a <strong>autoeficácia</strong>: "De 0 a 10, quanto vocês se sentem capazes de fazer isso?". Notas baixas indicam necessidade de apoio prático.</li>
@@ -154,13 +183,23 @@
     </section>
 
     <section class="module-panel" aria-labelledby="dxTitulo">
-      <h2 id="dxTitulo">Exemplos de diagnósticos de enfermagem (CIPE® e NANDA-I)</h2>
-      <p>Exemplos de enunciados para situações frequentes na puericultura. O diagnóstico depende da avaliação de cada criança e família.</p>
-      <div class="tabela-rolagem" tabindex="0" role="region" aria-label="Tabela de exemplos de diagnósticos"><table class="dx-tabela"><thead><tr><th scope="col">Situação</th><th scope="col">Exemplos de enunciados</th><th scope="col">Intervenções de promoção da saúde</th></tr></thead><tbody>${DIAGNOSTICOS.map(([a, b, c]) => `<tr><th scope="row">${a}</th><td>${b}</td><td>${c}</td></tr>`).join('')}</tbody></table></div>
-      <p class="storage-note">Os rótulos mudam entre edições. Confira o enunciado e a definição na edição vigente da NANDA-I (2024–2026) e na CIPE® (hoje distribuída pelo SNOMED International; a versão 2019 está no ${link('https://www.icn.ch/icnp-browser', 'navegador do ICN')}) antes de registrar.</p>
+      <h2 id="dxTitulo">Diagnósticos de enfermagem com CIPE® e NANDA-I</h2>
+      <p>O diagnóstico depende da avaliação de cada criança e família. Ao registrar, use o <strong>rótulo exato</strong>, o <strong>código</strong> e a <strong>classificação de origem</strong> da edição consultada:</p>
+      ${lista(['<strong>NANDA-I:</strong> edição 2024–2026 (13ª edição).', '<strong>CIPE®:</strong> informe a versão consultada. O navegador público do Conselho Internacional de Enfermeiros contém termos até 2019; o conteúdo atual é mantido no âmbito do SNOMED CT, por isso o navegador não confirma a terminologia vigente.'])}
+      <p>A tabela indica o que avaliar em situações frequentes da puericultura para chegar ao diagnóstico e quais intervenções de promoção da saúde considerar.</p>
+      <div class="tabela-rolagem" tabindex="0" role="region" aria-label="Tabela de situações para o diagnóstico de enfermagem"><table class="dx-tabela"><thead><tr><th scope="col">Situação</th><th scope="col">O que avaliar</th><th scope="col">Intervenções de promoção da saúde</th></tr></thead><tbody>${DIAGNOSTICOS.map(([a, b, c]) => `<tr><th scope="row">${a}</th><td data-label="O que avaliar">${b}</td><td data-label="Intervenções de promoção da saúde">${c}</td></tr>`).join('')}</tbody></table></div>
     </section>
 
-    <p class="source-note">Referências: Pender NJ, Murdaugh CL, Parsons MA. <em>Health Promotion in Nursing Practice</em>. 8. ed. Pearson; ${link('https://www.cofen.gov.br/resolucao-cofen-no-736-de-17-de-janeiro-de-2024/', 'Resolução COFEN nº 736/2024')}; Herdman TH, Kamitsuru S, Lopes CT. <em>Diagnósticos de enfermagem da NANDA-I: definições e classificação 2024–2026</em>. Artmed; Conselho Internacional de Enfermeiros. Classificação Internacional para a Prática de Enfermagem (CIPE®).</p>
+    <section class="module-panel referencias" aria-labelledby="refTitulo">
+      <h2 id="refTitulo">Referências</h2>
+      <ul>
+        <li>CONSELHO FEDERAL DE ENFERMAGEM. ${link('https://www.cofen.gov.br/resolucao-cofen-no-736-de-17-de-janeiro-de-2024/', 'Resolução Cofen nº 736, de 17 de janeiro de 2024')}. Dispõe sobre a implementação do Processo de Enfermagem.</li>
+        <li>HERDMAN, T. Heather; KAMITSURU, Shigemi; LOPES, Camila Takáo (org.). <strong>Diagnósticos de enfermagem da NANDA-I: definições e classificação 2024–2026</strong>. 13. ed. Porto Alegre: Artmed, 2024.</li>
+        <li>INTERNATIONAL COUNCIL OF NURSES. <strong>ICNP browser</strong>. Geneva: ICN, [s. d.]. Disponível em: ${link('https://www.icn.ch/icnp-browser', 'https://www.icn.ch/icnp-browser')}. Acesso em: 16 nov. 2026.</li>
+        <li>PENDER, Nola J. <strong>Health Promotion Model Manual</strong>. Ann Arbor: University of Michigan, 2011. Disponível em: ${link('https://deepblue.lib.umich.edu', 'deepblue.lib.umich.edu')}.</li>
+        <li>PENDER, Nola J.; MURDAUGH, Carolyn L.; PARSONS, Mary Ann. <strong>Health promotion in nursing practice</strong>. 8. ed. New York: Pearson, 2019.</li>
+      </ul>
+    </section>
   </section>`;
   main.insertAdjacentHTML('beforeend', promocao);
 
@@ -180,19 +219,24 @@
     const vacinas = fases.length
       ? `<ul class="vacina-mini">${fases.map(([, idade, itens]) => `<li><strong>${esc(idade)}:</strong> ${itens.map(([v, d]) => `${esc(v)} (${esc(d)})`).join('; ')}</li>`).join('')}</ul>`
       : '<p>Nenhuma vacina de rotina prevista até a próxima consulta. Confira se há doses atrasadas.</p>';
-    const [comportamento, pergunta, barreira] = PROMOCAO[i];
+    const [comportamento] = PROMOCAO[i];
+    const [faixaBase, foco] = FAIXAS_PENDER[FAIXA_CONSULTA[i]];
+    // A proposta da equipe cobre até 2 anos; aos 3 anos aplica-se a mesma orientação.
+    const faixa = IDADES_CONSULTA[i] > 24 ? `${faixaBase} (orientação mantida após os 2 anos)` : faixaBase;
     painel.querySelector('.storage-note')?.remove();
     painel.insertAdjacentHTML('beforeend', `<div class="consulta-extra">
       <section><h3>Vacinas até a próxima consulta</h3>${vacinas}<button type="button" class="link-inline open-view-extra" data-ir="view-imunizacao">Ver calendário completo</button></section>
       <section class="pender-box"><h3>Promoção da saúde (Nola Pender)</h3>
-        <p><strong>Comportamento a promover:</strong> ${esc(comportamento)}</p>
+        <p><strong>${esc(faixa)}:</strong> ${esc(foco)}</p>
+        <p><strong>Exemplo de tema nesta consulta:</strong> ${esc(comportamento)}</p>
         <dl>
-          <dt>Benefícios percebidos</dt><dd>${esc(pergunta)}</dd>
-          <dt>Barreiras frequentes</dt><dd>${esc(barreira)}</dd>
+          <dt>Benefícios percebidos</dt><dd>O que a família espera ganhar com esse cuidado?</dd>
+          <dt>Barreiras</dt><dd>O que dificulta fazer isso no dia a dia?</dd>
           <dt>Autoeficácia</dt><dd>"De 0 a 10, quanto vocês se sentem capazes de fazer isso nas próximas semanas?"</dd>
+          <dt>Apoio familiar</dt><dd>Quem pode ajudar em casa?</dd>
           <dt>Plano de ação</dt><dd>Combinar uma meta simples, registrar na consulta e retomar no retorno.</dd>
         </dl>
-        <button type="button" class="link-inline open-view-extra" data-ir="view-promocao">Ver modelo e diagnósticos de enfermagem</button>
+        <button type="button" class="link-inline open-view-extra" data-ir="view-promocao">Ver modelo e Processo de Enfermagem</button>
       </section>
     </div><p class="storage-note">Registre os achados na Caderneta da Criança.</p>`);
   }));
@@ -211,7 +255,7 @@
     </section>`);
     const secao = dash.querySelector('.modules-section-header');
     if (secao) secao.innerHTML = '<h2>Módulos</h2><p>Cada módulo indica o público a que se destina.</p>';
-    dash.querySelector('.puericultura-grid')?.insertAdjacentHTML('beforeend', `<div class="puericultura-item open-view-extra modulo-teoria" data-ir="view-promocao" role="button" tabindex="0"><div class="puericultura-item-img"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="22" r="10"/><path d="M14 54c2-11 9-17 18-17s16 6 18 17"/><path d="M44 12l8-4M48 22h8M44 32l8 4"/></svg></div><div class="puericultura-item-info"><h3>Promoção da Saúde</h3><p>Nola Pender, Processo de Enfermagem e CIPE/NANDA-I</p></div></div>`);
+    dash.querySelector('.puericultura-grid')?.insertAdjacentHTML('beforeend', `<div class="puericultura-item open-view-extra modulo-teoria" data-ir="view-promocao" role="button" tabindex="0"><div class="puericultura-item-img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></div><div class="puericultura-item-info"><h3>Promoção da Saúde</h3><p>Nola Pender, Processo de Enfermagem e CIPE/NANDA-I</p></div></div>`);
     const PUBLICO = {
       'view-neonatais': ['Profissional', 'Família'], 'view-crescimento': ['Profissional', 'Educador'],
       'view-imunizacao': ['Profissional', 'Família'], 'view-consultas': ['Profissional'],
@@ -237,16 +281,47 @@
   /* 7. Navegação consistente                                            */
   /* ------------------------------------------------------------------ */
   const menu = document.querySelector('.nav-menu');
+  const ICONES = {
+    consultas: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/>',
+    imunizacao: '<path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/>',
+    educacao: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    promocao: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>'
+  };
+  const icone = nome => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONES[nome]}</svg>`;
   const itens = [
-    ['view-consultas', 'Consultas por idade'],
-    ['view-imunizacao', 'Imunização'],
-    ['view-educacao', 'Educação Familiar'],
-    ['view-promocao', 'Promoção da Saúde']
+    ['view-consultas', 'Consultas por idade', 'consultas'],
+    ['view-imunizacao', 'Imunização', 'imunizacao'],
+    ['view-educacao', 'Educação Familiar', 'educacao'],
+    ['view-promocao', 'Promoção da Saúde', 'promocao']
   ];
-  itens.forEach(([alvo, texto]) => {
+  itens.forEach(([alvo, texto, ic]) => {
     if (menu.querySelector(`[data-target="${alvo}"]`)) return;
-    menu.insertAdjacentHTML('beforeend', `<li><a href="#${alvo}" class="nav-link nav-extra" data-ir="${alvo}" data-target="${alvo}"><span class="nav-dot" aria-hidden="true"></span>${texto}</a></li>`);
+    menu.insertAdjacentHTML('beforeend', `<li><a href="#${alvo}" class="nav-link nav-extra" data-ir="${alvo}" data-target="${alvo}">${icone(ic)} ${texto}</a></li>`);
   });
+  // Ícones de linha no lugar dos símbolos de texto (♧, ▤, ▧) e ícone próprio para Postos de Saúde.
+  const ICONES_RESTRITOS = {
+    'view-nova-consulta': '<path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 14h6M12 11v6"/>',
+    'view-caderneta': '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+    'view-noticias': '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/>',
+    'view-educador': '<path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>'
+  };
+  Object.entries(ICONES_RESTRITOS).forEach(([alvo, svg]) => {
+    document.querySelectorAll(`.nav-link[data-target="${alvo}"]`).forEach(a => {
+      a.querySelector('span[aria-hidden="true"]')?.remove();
+      if (!a.querySelector('svg')) a.insertAdjacentHTML('afterbegin', `<svg viewBox="0 0 24 24" aria-hidden="true">${svg}</svg> `);
+    });
+  });
+  const postos = $('btnSidebarPostos')?.querySelector('svg');
+  if (postos) postos.innerHTML = '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>';
+
+  // Login / Minha conta: o texto é reescrito a cada mudança de conta; recoloca o ícone.
+  const iconeConta = () => {
+    const btn = $('btnAcessoLogin');
+    if (btn && !btn.querySelector('svg')) btn.insertAdjacentHTML('afterbegin', '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> ');
+  };
+  iconeConta();
+  window.addEventListener('conta-alterada', iconeConta);
+
   // Ordem segue a jornada da criança: nascimento → consultas → vacinas → crescimento → família.
   const ordem = ['view-dashboard', 'view-neonatais', 'view-consultas', 'view-imunizacao', 'view-crescimento', 'view-amamentacao', 'view-educacao', 'view-promocao'];
   ordem.forEach(alvo => {

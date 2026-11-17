@@ -58,3 +58,14 @@ Verificação: sem rolagem horizontal a 320, 390 e 1280 px, nenhum erro de scrip
 2. O responsável clínico deve validar os prazos da triagem neonatal e as faixas do M-CHAT-R/F.
 3. Conferir a sugestão de comportamento de Pender para cada idade.
 4. Uma nova rodada com os juízes, ou um teste de usabilidade com 5 a 8 usuários reais, completaria o ciclo iterativo do design centrado no ser humano.
+
+## 6. Revisão clínica de 17/11/2026 (pendências conferidas pelo mestrando)
+
+| Pendência | Parecer | Alteração |
+| --- | --- | --- |
+| Rótulos CIPE/NANDA-I | Sem acesso aos termos, não é possível afirmar que os rótulos estão corretos, mesmo como exemplos. O navegador público da CIPE vai até 2019. | Os rótulos foram retirados. A tela orienta o registro com rótulo exato, código e classificação de origem (NANDA-I 2024–2026, 13ª ed.; CIPE com indicação da versão). A tabela passou a mostrar "O que avaliar" e as intervenções. |
+| Prazos da triagem neonatal | Pezinho: após 48 h até o 5º dia (preferencialmente do 3º ao 5º). Coraçãozinho: 24–48 h, antes da alta. Orelhinha: na maternidade; se não feita, no primeiro mês. Olhinho: na maternidade, com acompanhamento na puericultura. | Prazos atualizados conforme o parecer, com nota sobre situações especiais e fluxo local e com as referências do Ministério da Saúde. |
+| Pender por idade | O modelo não define uma lista fixa de comportamentos por idade. Proposta por faixa: recém-nascido e lactente; 1–2 anos. | A tela Promoção da Saúde tem uma tabela "Aplicação por faixa etária". Nas consultas, o bloco de Pender mostra o foco da faixa, um exemplo de tema e as perguntas sobre benefícios, barreiras, autoeficácia, apoio familiar e plano de ação. Aos 3 anos, mantém-se a orientação de 1–2 anos. |
+| Acompanhamento em todas as fases | Incluir o calendário mínimo de consultas do Ministério da Saúde. | Tabela de acompanhamento adicionada em Cuidados Neonatais, após a triagem. |
+| Novos ícones | — | Ícones de linha no menu para Consultas, Imunização, Educação Familiar, Promoção da Saúde, Nova Consulta, Caderneta, Notícias, Acesso do Educador, Postos de Saúde e Login. |
+| Botão Início da tela Promoção da Saúde | Não funcionava. | Corrigido. Todos os botões "← Início" foram testados. |
