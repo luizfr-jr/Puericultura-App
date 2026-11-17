@@ -142,6 +142,7 @@
   const promocao = `<section id="view-promocao" class="page-view inner-view">
     <button type="button" class="btn-voltar open-view-extra" data-ir="view-dashboard">← Início</button>
     <header class="module-header-text"><h1 tabindex="-1">Promoção da Saúde e Processo de Enfermagem</h1><p>Fundamentação teórica do portal: Modelo de Promoção da Saúde de Nola Pender, Processo de Enfermagem e linguagens padronizadas (CIPE® e NANDA-I).</p></header>
+    <img class="promocao-banner" src="assets/modulos/promocao-saude.jpg" alt="Enfermeira conversa com avó, mãe e criança sobre promoção da saúde">
     <div class="notice success">O portal usa o Modelo de Promoção da Saúde de Nola Pender para orientar a consulta: em vez de apenas prescrever cuidados, o profissional busca entender o que a família pensa, sente e consegue fazer, e combina com ela um plano de ação possível.</div>
 
     <section class="module-panel" aria-labelledby="penderTitulo">
@@ -255,7 +256,7 @@
     </section>`);
     const secao = dash.querySelector('.modules-section-header');
     if (secao) secao.innerHTML = '<h2>Módulos</h2><p>Cada módulo indica o público a que se destina.</p>';
-    dash.querySelector('.puericultura-grid')?.insertAdjacentHTML('beforeend', `<div class="puericultura-item open-view-extra modulo-teoria" data-ir="view-promocao" role="button" tabindex="0"><div class="puericultura-item-img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></div><div class="puericultura-item-info"><h3>Promoção da Saúde</h3><p>Nola Pender, Processo de Enfermagem e CIPE/NANDA-I</p></div></div>`);
+    dash.querySelector('.puericultura-grid')?.insertAdjacentHTML('beforeend', `<div class="puericultura-item open-view-extra modulo-teoria" data-ir="view-promocao" role="button" tabindex="0"><div class="puericultura-item-img"><img src="assets/modulos/promocao-saude.jpg" alt="Enfermeira conversa com avó, mãe e criança sobre promoção da saúde" loading="lazy"></div><div class="puericultura-item-info"><h3>Promoção da Saúde</h3><p>Nola Pender, Processo de Enfermagem e CIPE/NANDA-I</p></div></div>`);
     const PUBLICO = {
       'view-neonatais': ['Profissional', 'Família'], 'view-crescimento': ['Profissional', 'Educador'],
       'view-imunizacao': ['Profissional', 'Família'], 'view-consultas': ['Profissional'],
@@ -281,13 +282,6 @@
   /* 7. Navegação consistente                                            */
   /* ------------------------------------------------------------------ */
   const menu = document.querySelector('.nav-menu');
-  const ICONES = {
-    consultas: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/>',
-    imunizacao: '<path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/>',
-    educacao: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-    promocao: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>'
-  };
-  const icone = nome => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONES[nome]}</svg>`;
   const itens = [
     ['view-consultas', 'Consultas por idade', 'consultas'],
     ['view-imunizacao', 'Imunização', 'imunizacao'],
@@ -296,31 +290,40 @@
   ];
   itens.forEach(([alvo, texto, ic]) => {
     if (menu.querySelector(`[data-target="${alvo}"]`)) return;
-    menu.insertAdjacentHTML('beforeend', `<li><a href="#${alvo}" class="nav-link nav-extra" data-ir="${alvo}" data-target="${alvo}">${icone(ic)} ${texto}</a></li>`);
+    menu.insertAdjacentHTML('beforeend', `<li><a href="#${alvo}" class="nav-link nav-extra" data-ir="${alvo}" data-target="${alvo}">${texto}</a></li>`);
   });
-  // Ícones de linha no lugar dos símbolos de texto (♧, ▤, ▧) e ícone próprio para Postos de Saúde.
-  const ICONES_RESTRITOS = {
-    'view-nova-consulta': '<path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 14h6M12 11v6"/>',
-    'view-caderneta': '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
-    'view-noticias': '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/>',
-    'view-educador': '<path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>'
+  // Ícones ilustrados da equipe (pasta Mestrado Francisco/Icones), sem o rótulo de texto.
+  const ICONE_DA_TELA = {
+    'view-dashboard': 'visao-geral', 'view-neonatais': 'neonatais', 'view-consultas': 'consultas',
+    'view-imunizacao': 'imunizacao', 'view-crescimento': 'crescimento', 'view-amamentacao': 'amamentacao',
+    'view-educacao': 'educacao', 'view-promocao': 'promocao', 'view-nova-consulta': 'nova-consulta',
+    'view-caderneta': 'caderneta', 'view-documentos': 'documentos', 'view-receituario': 'receituario',
+    'view-noticias': 'noticias', 'view-educador': 'educador', 'view-login': 'conta'
   };
-  Object.entries(ICONES_RESTRITOS).forEach(([alvo, svg]) => {
-    document.querySelectorAll(`.nav-link[data-target="${alvo}"]`).forEach(a => {
-      a.querySelector('span[aria-hidden="true"]')?.remove();
-      if (!a.querySelector('svg')) a.insertAdjacentHTML('afterbegin', `<svg viewBox="0 0 24 24" aria-hidden="true">${svg}</svg> `);
+  const imgIcone = (nome, cls = 'nav-ico') => `<img class="${cls}" src="assets/icones/${nome}.png" alt="" aria-hidden="true" width="28" height="28">`;
+  const trocarIcone = (el, nome) => {
+    if (!el || el.querySelector('img.nav-ico')) return;
+    el.querySelectorAll(':scope > svg, :scope > span[aria-hidden="true"]').forEach(n => n.remove());
+    el.insertAdjacentHTML('afterbegin', imgIcone(nome));
+  };
+  const aplicarIcones = () => {
+    document.querySelectorAll('.nav-menu .nav-link[data-target]').forEach(a => {
+      const nome = ICONE_DA_TELA[a.dataset.target];
+      if (nome) trocarIcone(a, nome);
     });
-  });
-  const postos = $('btnSidebarPostos')?.querySelector('svg');
-  if (postos) postos.innerHTML = '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>';
-
-  // Login / Minha conta: o texto é reescrito a cada mudança de conta; recoloca o ícone.
-  const iconeConta = () => {
-    const btn = $('btnAcessoLogin');
-    if (btn && !btn.querySelector('svg')) btn.insertAdjacentHTML('afterbegin', '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> ');
+    trocarIcone($('btnSidebarPostos'), 'postos');
+    trocarIcone($('btnSair'), 'sair');
   };
-  iconeConta();
-  window.addEventListener('conta-alterada', iconeConta);
+  // Cartões da tela Minha conta
+  document.querySelectorAll('#view-conta .module-card[data-target]').forEach(card => {
+    const nome = ICONE_DA_TELA[card.dataset.target];
+    if (nome && !card.querySelector('img')) card.insertAdjacentHTML('afterbegin', imgIcone(nome, 'card-ico'));
+  });
+  aplicarIcones();
+  // login.js reescreve o texto de Login/Minha conta a cada mudança de conta.
+  window.addEventListener('conta-alterada', aplicarIcones);
+  const acessoConta = $('btnAcessoLogin');
+  if (acessoConta) new MutationObserver(() => trocarIcone(acessoConta, 'conta')).observe(acessoConta, { childList: true });
 
   // Ordem segue a jornada da criança: nascimento → consultas → vacinas → crescimento → família.
   const ordem = ['view-dashboard', 'view-neonatais', 'view-consultas', 'view-imunizacao', 'view-crescimento', 'view-amamentacao', 'view-educacao', 'view-promocao'];
