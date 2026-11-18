@@ -336,6 +336,33 @@
 
   document.querySelectorAll('.btn-voltar').forEach(b => { b.textContent = '← Início'; });
 
+  /* ------------------------------------------------------------------ */
+  /* 8. Menu no celular: barra fixa com botão "Menu" e todos os módulos   */
+  /* ------------------------------------------------------------------ */
+  const sidebar = document.querySelector('.sidebar');
+  const logo = sidebar?.querySelector('.logo-area');
+  if (sidebar && logo && !$('menuPainel')) {
+    const painel = document.createElement('div');
+    painel.id = 'menuPainel';
+    painel.className = 'menu-painel';
+    [...sidebar.children].filter(el => el !== logo).forEach(el => painel.append(el));
+    sidebar.append(painel);
+    logo.insertAdjacentHTML('beforeend', `<button type="button" class="menu-toggle" aria-controls="menuPainel" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span></button>`);
+    const toggle = logo.querySelector('.menu-toggle');
+    const definir = aberto => {
+      sidebar.classList.toggle('menu-aberto', aberto);
+      toggle.setAttribute('aria-expanded', String(aberto));
+      toggle.querySelector('span').textContent = aberto ? 'Fechar' : 'Menu';
+      toggle.querySelector('path').setAttribute('d', aberto ? 'M6 6l12 12M18 6 6 18' : 'M4 6h16M4 12h16M4 18h16');
+    };
+    toggle.addEventListener('click', () => definir(!sidebar.classList.contains('menu-aberto')));
+    // Fecha ao escolher um item, ao tocar fora do menu ou com Esc.
+    painel.addEventListener('click', ev => { if (ev.target.closest('a, button')) definir(false); });
+    document.addEventListener('click', ev => { if (!sidebar.contains(ev.target)) definir(false); });
+    document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && sidebar.classList.contains('menu-aberto')) { definir(false); toggle.focus(); } });
+  }
+
   // Atalhos que reutilizam a navegação existente.
   document.addEventListener('click', ev => {
     const alvo = ev.target.closest('[data-ir]');

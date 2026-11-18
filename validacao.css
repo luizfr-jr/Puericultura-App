@@ -121,3 +121,25 @@
 .publico-tag { font-size: 11px; font-weight: 700; color: #475569; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 999px; padding: 2px 8px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .inicio-rapido { margin-bottom: 0; }
+
+/* Menu no celular (≤ 700px): barra fixa com botão Menu; todos os módulos acessíveis */
+.menu-toggle { display: none; }
+@media (max-width: 700px) {
+  .sidebar { position: sticky !important; top: 8px; z-index: 50; padding: 10px 12px !important; margin-bottom: 12px !important; }
+  .sidebar .logo-area { display: flex; align-items: center; gap: 10px; margin: 0 !important; padding: 0 !important; border-bottom: 0 !important; }
+  .sidebar .logo-area h2 { font-size: 15px; flex: 1; }
+  .sidebar .logo-img { width: 36px; height: 36px; }
+  .menu-toggle { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 14px; border-radius: 12px; border: 1px solid #fecdd3; background: #fff1f2; color: #9f1239; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; }
+  .menu-toggle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+  .menu-painel { display: none; }
+  .sidebar.menu-aberto .menu-painel { display: block; max-height: calc(100vh - 110px); overflow-y: auto; padding-top: 10px; margin-top: 10px; border-top: 1px solid var(--border-color); overscroll-behavior: contain; }
+  .sidebar .nav-menu { display: grid !important; grid-template-columns: 1fr 1fr; gap: 6px; overflow: visible !important; margin-bottom: 6px; }
+  .sidebar .nav-menu li { min-width: 0; }
+  .sidebar .nav-menu li a { font-size: 13px !important; padding: 8px 10px; min-height: 48px; gap: 8px; transform: none !important; border: 1px solid var(--border-color); background: #fff; }
+  .sidebar .nav-menu li a.active { border-color: #fda4af; }
+  .sidebar .menu-category { margin: 10px 2px 6px !important; }
+  #btnSair { margin-top: 6px; min-height: 44px; }
+}
+@media (max-width: 360px) {
+  .sidebar .nav-menu { grid-template-columns: 1fr; }
+}
